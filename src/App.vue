@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import PWABadge from './components/PWABadge.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import PWABadge from "./components/PWABadge.vue";
 </script>
 
 <template>

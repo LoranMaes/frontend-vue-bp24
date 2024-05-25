@@ -11,7 +11,8 @@
   "dependencies": {
     "@tanstack/vue-query": "^5.38.0",
     "axios": "^1.7.2",
-    "vue": "^3.4.26"
+    "vue": "^3.4.26",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vite-pwa/assets-generator": "^0.2.4",
