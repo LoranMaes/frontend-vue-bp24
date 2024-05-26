@@ -1,11 +1,16 @@
 import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    VueI18nPlugin({
+      include: "./src/assets/locales/**",
+      strictMessage: false,
+    }),
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
@@ -62,4 +67,9 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      "@": "./src",
+    },
+  },
 });

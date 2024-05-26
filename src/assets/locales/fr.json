@@ -1,0 +1,35 @@
+{
+  "landingPage": {
+    "title": "Time registration for dairy farmers",
+    "loginButton": "Already have an account? Login here",
+    "registerButton": "Don't have an account? Register here"
+  },
+  "authentication": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "loginButton": "Login",
+      "passwordHint": "Your password must be between 8 and 30 characters long"
+    },
+    "register": {
+      "title": "Register",
+      "email": "Email",
+      "password": "Password",
+      "passwordConfirmation": "Repeat password",
+      "passwordHint": "Your password must be between 8 and 30 characters long",
+      "registerButton": "Register"
+    },
+    "registerCompletion": {
+      "title": "Welcome!",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "profilePicture": "Profile picture",
+      "registerButton": "Confirm your details",
+      "termsAndConditions": "By registering, you agree to our <a href='/'>terms and conditions<a>"
+    }
+  },
+  "inputPlaceholders": {
+    "searchFile": "Search a file"
+  }
+}

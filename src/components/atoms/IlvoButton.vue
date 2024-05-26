@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineEmits(["button-clicked"]);
+</script>
 
 <template>
-  <button class="ilvo-button">
+  <button class="ilvo-button" @click="$emit('button-clicked')">
     <slot></slot>
   </button>
 </template>
