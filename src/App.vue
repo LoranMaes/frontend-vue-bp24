@@ -1,12 +1,8 @@
-<script setup lang="ts">
-import PWABadge from "./components/PWABadge.vue";
-import IlvoLandingPageView from "./views/IlvoLandingPageView.vue";
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <IlvoLandingPageView />
-  <PWABadge></PWABadge>
+  <!-- Make routing possible -->
+  <RouterView></RouterView>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

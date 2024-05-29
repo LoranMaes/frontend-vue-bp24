@@ -31,5 +31,8 @@
   },
   "inputPlaceholders": {
     "searchFile": "Search a file"
+  },
+  "dashboard": {
+    "title": "Welcome, {name}!"
   }
 }
