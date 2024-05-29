@@ -1,5 +1,6 @@
 <script setup lang="ts">
 defineEmits(["button-clicked"]);
+defineProps({ style: String, type: String, disabled: Boolean });
 </script>
 
 <template>

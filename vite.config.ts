@@ -2,7 +2,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-
+import basicSsl from "@vitejs/plugin-basic-ssl";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -10,6 +10,12 @@ export default defineConfig({
     VueI18nPlugin({
       include: "./src/assets/locales/**",
       strictMessage: false,
+    }),
+    basicSsl({
+      /** name of certification */
+      name: "test",
+      /** custom trust domains */
+      domains: ["localhost"],
     }),
     VitePWA({
       registerType: "autoUpdate",
@@ -19,7 +25,8 @@ export default defineConfig({
         disabled: false,
         config: true,
       },
-      includeAssets: [],
+      // Cache all static assets in the public folder
+      includeAssets: ["**/*"],
       manifest: {
         name: "Vue bp time registration for dairy farmers",
         short_name: "Vue bp time registration",
@@ -52,7 +59,7 @@ export default defineConfig({
           },
         ],
       },
-
+      // Cache all imports with these extensions
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
         cleanupOutdatedCaches: true,

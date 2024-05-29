@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import "./style.css";
+import "./style.scss";
 import App from "./App.vue";
 import messages from "@intlify/unplugin-vue-i18n/messages";
 import { createI18n } from "vue-i18n";
