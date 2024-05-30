@@ -1,8 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import IlvoHeader from "./components/organisms/IlvoHeader.vue";
+</script>
 
 <template>
+  <IlvoHeader />
+
   <!-- Make routing possible -->
-  <RouterView></RouterView>
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped lang="scss"></style>

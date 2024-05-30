@@ -14,8 +14,7 @@ const login = () => {
   <section id="landing-page">
     <div class="upper">
       <h1>{{ $t("landingPage.title") }}</h1>
-      <RouterLink to="/dashboard">Dashboard</RouterLink>
-      <RouterLink to="/">Login</RouterLink>
+      <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
     </div>
     <div class="landing-actions">
       <IlvoButton @button-clicked="register">{{
