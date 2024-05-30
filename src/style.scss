@@ -1,4 +1,44 @@
 :root {
+  --primary-color: #ef8451;
+  --secondary-color: #358068;
+  --state-info: #a285d0;
+  --state-warning: #5356db;
+  --state-error: #f44336;
+  --primary-black: #222831;
+  --off-white: #f9f8f5;
+  --primary-white: #fafafa;
+  --gray-1: #393e46;
+  --gray-2: #b9bec6;
+  --gray-3: #9fa6b1;
+  --tint-orange: #393e46;
+  --tint-green: #dfefd7;
+  --tint-purple: #e7e0eb;
+  // Website to create gradients from the design: https://cssgradient.io/
+  --gradient-green: linear-gradient(
+    90deg,
+    rgba(53, 128, 104, 1) 0%,
+    rgba(0, 181, 123, 1) 100%
+  );
+
+  --shadow-sm: 0 0 4px 0 rgba(42, 42, 42, 0.2);
+  --shadow-sm-bottom: 0 4px 4px 0 rgba(42, 42, 42, 0.2);
+  --shadow-sm-top: 0 -4px 4px 0 rgba(42, 42, 42, 0.2);
+  --shadow-md: 0 0 8px 0 rgba(42, 42, 42, 0.2);
+  --shadow-md-bottom: 0 8px 8px 0 rgba(42, 42, 42, 0.2);
+  --shadow-md-top: 0 -8px 8px 0 rgba(42, 42, 42, 0.2);
+  --shadow-lg: 0 0 16px 2px rgba(42, 42, 42, 0.2);
+  --shadow-lg-bottom: 0 8px 16px 2px rgba(42, 42, 42, 0.2);
+  --shadow-lg-top: 0 -8px 16px 2px rgba(42, 42, 42, 0.2);
+
+  --mobile-header-1: 2.8rem;
+  --mobile-header-2: 2.1rem;
+  --mobile-header-3: 1.6rem;
+  --mobile-header-4: 1.6rem;
+  --mobile-p: 1.6rem;
+  --mobile-a: 1.6rem;
+  --mobile-link: 1.6rem;
+  --mobile-label: 1.8rem;
+  --mobile-small: 1.2rem;
 }
 
 html,
@@ -10,6 +50,7 @@ footer,
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 }
 
 html {
@@ -18,42 +59,95 @@ html {
   min-height: 100vh;
   font-size: 10px;
   font-family: "Raleway", sans-serif;
+  background-color: var(--primary-white);
+  color: var(--primary-black);
 }
 
 body {
   margin: 0;
   padding: 0;
-}
-
-header {
-}
-
-main {
-}
-
-footer {
+  max-width: 64rem;
+  width: 100%;
+  margin: 0 auto;
 }
 
 h1 {
+  font-size: var(--mobile-header-1);
+  color: var(--primary-black);
 }
 
 h2 {
+  font-size: var(--mobile-header-2);
+  color: var(--primary-black);
 }
 
 h3 {
+  font-size: var(--mobile-header-3);
+  color: var(--primary-black);
 }
 
 h4 {
+  font-size: var(--mobile-header-4);
+  color: var(--primary-black);
 }
 
 p {
+  font-size: var(--mobile-p);
+  font-weight: 500;
+  color: var(--primary-black);
+}
+
+label {
+  font-size: var(--mobile-label);
+  font-weight: 600;
+  color: var(--primary-black);
 }
 
 a {
+  font-size: var(--mobile-a);
+  font-weight: 500;
+  color: var(--primary-black);
+}
+
+button {
+  font-size: var(--mobile-p);
+}
+
+.small {
+  font-size: var(--mobile-small);
+}
+
+.bold {
+  font-weight: 700;
 }
 
 ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 li {
+  font-size: var(--mobile-p);
+  margin: 0;
+  padding: 0;
+  color: var(--primary-white);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }

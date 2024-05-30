@@ -1,10 +1,22 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
+  <div id="not-found">
     <h1>404</h1>
     <p>Page not found</p>
+    <RouterLink :to="{ name: 'dashboard' }"
+      >Go back to the dashboard</RouterLink
+    >
   </div>
 </template>
 
-<style lang="scss"></style>
+<style scoped lang="scss">
+#not-found {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-black);
+}
+</style>

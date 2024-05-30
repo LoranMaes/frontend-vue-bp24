@@ -21,6 +21,9 @@ const routes = [
           default: () => import("./views/IlvoLandingPageView.vue"),
           modal: () => import("./components/organisms/IlvoLoginForm.vue"),
         },
+        meta: {
+          slideDown: true,
+        },
       },
       {
         path: "register",
@@ -28,6 +31,9 @@ const routes = [
         components: {
           default: () => import("./views/IlvoLandingPageView.vue"),
           modal: () => import("./components/organisms/IlvoRegisterForm.vue"),
+        },
+        meta: {
+          slideDown: true,
         },
       },
     ],
@@ -88,6 +94,25 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const requiresSlideDown = from.meta.slideDown;
+  if (requiresSlideDown) {
+    const login = document.querySelector("#login-form");
+    const register = document.querySelector("#register-form");
+    if (login) {
+      login.classList.add("slide-down");
+    }
+    if (register) {
+      register.classList.add("slide-down");
+    }
+    setTimeout(() => {
+      next();
+    }, 500);
+  } else {
+    next();
+  }
 });
 
 export default router;

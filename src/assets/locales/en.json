@@ -1,6 +1,6 @@
 {
   "landingPage": {
-    "title": "Time registration for dairy farmers",
+    "title": "Time registration",
     "loginButton": "Already have an account?",
     "registerButton": "Don't have an account?"
   },
@@ -27,7 +27,8 @@
       "profilePicture": "Profile picture",
       "registerButton": "Confirm your details",
       "termsAndConditions": "By registering, you agree to our <a href='/'>terms and conditions<a>"
-    }
+    },
+    "goBack": "Go back"
   },
   "inputPlaceholders": {
     "searchFile": "Search a file"

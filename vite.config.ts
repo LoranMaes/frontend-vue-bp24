@@ -33,6 +33,7 @@ export default defineConfig({
         description: "A time registration tool for dairy farmers",
         theme_color: "#ef8451",
         start_url: "/",
+        scope: "/",
         display: "standalone",
         icons: [
           {

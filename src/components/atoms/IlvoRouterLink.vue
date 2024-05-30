@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import * as mdiIcons from "@mdi/js";
-import { computed } from "vue";
+import type { RouteLocation } from "vue-router";
+import { computed, defineProps } from "vue";
 import {
+  linkTypes,
   buttonSizes,
   buttonStyleValues,
-  buttonTypes,
 } from "../../models/property.enum";
 import { isValidMdiIcon } from "../../composables/validators";
+import * as mdiIcons from "@mdi/js";
 
-defineEmits(["button-clicked"]);
 const props = defineProps<{
-  style: buttonStyleValues;
-  type: buttonTypes;
+  to: { name: string };
+  style?: buttonStyleValues;
+  type?: linkTypes;
   size?: buttonSizes;
   rounded?: boolean;
   disabled?: boolean;
   mdiIcon?: string;
-  submit?: boolean;
+  hasIcon?: boolean;
 }>();
 
 const iconPath = computed(() => {
@@ -28,22 +29,29 @@ const iconPath = computed(() => {
 </script>
 
 <template>
-  <button
-    :class="[style, type, size ?? size, { rounded: rounded }]"
-    @click="$emit('button-clicked')"
-    :disabled="disabled"
-    :type="submit ? 'submit' : 'button'"
+  <router-link
+    router-link
+    :to
+    :class="[
+      style,
+      type,
+      size ?? size,
+      { rounded: rounded, 'has-icon': hasIcon },
+    ]"
   >
-    <slot></slot>
-
+    <slot>Enter a link</slot>
     <svg v-if="iconPath" :viewBox="'0 0 24 24'" :height="'20'" fill="#fafafa">
       <path :d="iconPath"></path>
     </svg>
-  </button>
+  </router-link>
 </template>
 
 <style scoped lang="scss">
-button {
+.link {
+  color: var(--primary-color);
+}
+
+.button {
   border: none;
   cursor: pointer;
   display: flex;
@@ -52,13 +60,8 @@ button {
   border-radius: 0.5rem;
   padding: 1.6rem 3.2rem;
   font-weight: 700;
-  &.text,
-  .icon {
-    justify-content: center;
-  }
-  &.text-and-icon {
-    justify-content: space-between;
-  }
+  text-decoration: none;
+  box-sizing: border-box;
   &.primary {
     background-color: var(--primary-color);
     color: var(--primary-white);
@@ -72,6 +75,12 @@ button {
   }
   &.full-width {
     width: 100%;
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.has-icon {
+    justify-content: space-between;
   }
 }
 </style>
