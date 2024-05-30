@@ -7,7 +7,8 @@ import IlvoHeader from "./components/organisms/IlvoHeader.vue";
 
   <!-- Make routing possible -->
   <main>
-    <RouterView />
+    <RouterView name="default" />
+    <RouterView name="modal" />
   </main>
 </template>
 
