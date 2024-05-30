@@ -71,12 +71,17 @@ const routes = [
             component: () => import("./views/admin/IlvoAllUsersView.vue"),
           },
           {
-            path: "create-category",
-            name: "createCategory",
+            path: "create-user",
+            name: "createUser",
             component: () => import("./views/admin/IlvoCreateUser.vue"),
           },
           {
-            path: "create-user",
+            path: "all-categories",
+            name: "allCategories",
+            component: () => import("./views/admin/IlvoAllCategoriesView.vue"),
+          },
+          {
+            path: "create-category",
             name: "createCategory",
             component: () => import("./views/admin/IlvoCreateCategory.vue"),
           },
@@ -87,7 +92,7 @@ const routes = [
   {
     path: "/:pathMatch(.*)*",
     name: "not-found",
-    component: () => import("./views/Ilvo404View.vue"),
+    component: () => import("./views/IlvoNotFoundView.vue"),
   },
 ];
 

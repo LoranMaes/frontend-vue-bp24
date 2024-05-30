@@ -1,6 +1,7 @@
 export enum buttonStyleValues {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  RED = "red",
 }
 
 export enum buttonTypes {

@@ -11,15 +11,16 @@ const props = defineProps<{
   iconSide?: "left" | "right";
   disabled?: boolean;
   readonly?: boolean;
+  error?: boolean;
 }>();
+const model = defineModel("input", { required: true });
+
 const iconPath = computed(() => {
   if (props.mdiIcon && isValidMdiIcon(props.mdiIcon)) {
     return (mdiIcons as { [key: string]: string })[props.mdiIcon];
   }
   return null;
 });
-
-const input = ref("");
 const showPassword = ref(false);
 </script>
 
@@ -30,7 +31,8 @@ const showPassword = ref(false);
     :readonly
     :id
     :placeholder
-    v-model="input"
+    :class="[error ? 'error' : '']"
+    v-model="model"
   ></textarea>
   <div
     v-else
@@ -51,7 +53,8 @@ const showPassword = ref(false);
       :readonly
       :id
       :placeholder
-      v-model="input"
+      :class="[error ? 'error' : '']"
+      v-model="model"
     />
     <svg
       v-if="iconPath && iconSide === 'right' && type !== 'password'"
@@ -66,6 +69,7 @@ const showPassword = ref(false);
       class="password right"
       v-if="type === 'password'"
       @click="() => (showPassword = !showPassword)"
+      type="button"
     >
       <svg
         class="password"
@@ -88,6 +92,9 @@ textarea {
   box-shadow: var(--shadow-sm);
   padding: 1.2rem 1.8rem;
   font-size: 1.6rem;
+  &.error {
+    border-color: var(--state-error);
+  }
 }
 .input-field {
   display: flex;

@@ -12,7 +12,10 @@ const props = defineProps<{
   iconSide?: "left" | "right";
   disabled?: boolean;
   readonly?: boolean;
+  error?: boolean;
+  errorHelper?: string;
 }>();
+const model = defineModel("input", { required: true });
 </script>
 
 <template>
@@ -26,8 +29,11 @@ const props = defineProps<{
       :readonly
       :mdi-icon="mdiIcon"
       :icon-side="iconSide"
+      v-model:input="model"
+      :error="error"
     />
-    <p class="small" v-if="helper">{{ helper }}</p>
+    <p class="small" v-if="helper && !error">{{ helper }}</p>
+    <p class="small error" v-if="error">{{ errorHelper }}</p>
   </div>
 </template>
 
@@ -38,6 +44,10 @@ const props = defineProps<{
   gap: 0.5rem;
   p {
     margin: 0;
+    &.error {
+      font-weight: 700;
+      color: var(--state-error);
+    }
   }
 }
 </style>

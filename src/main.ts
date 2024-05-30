@@ -7,6 +7,8 @@ import messages from "@intlify/unplugin-vue-i18n/messages";
 import { createI18n } from "vue-i18n";
 import router from "./router";
 
+const app = createApp(App);
+
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,
@@ -18,7 +20,6 @@ const i18n = createI18n({
 
 const pinia = createPinia();
 
-const app = createApp(App);
 app.use(i18n);
 app.use(pinia);
 app.use(VueQueryPlugin);

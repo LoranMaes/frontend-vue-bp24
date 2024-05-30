@@ -10,7 +10,9 @@
       "email": "Email",
       "password": "Password",
       "loginButton": "Login",
-      "passwordHint": "Your password must be between 8 and 30 characters long"
+      "passwordHint": "Your password must be between 8 and 30 characters long",
+      "emailError": "This is not a valid email address",
+      "passwordError": "Your password must be between 8 and 30 characters long"
     },
     "register": {
       "title": "Register",
@@ -18,7 +20,9 @@
       "password": "Password",
       "passwordConfirmation": "Repeat password",
       "passwordHint": "Your password must be between 8 and 30 characters long",
-      "registerButton": "Register"
+      "registerButton": "Register",
+      "emailError": "This is not a valid email address",
+      "passwordError": "Your password must be between 8 and 30 characters long"
     },
     "registerCompletion": {
       "title": "Welcome!",
@@ -28,12 +32,37 @@
       "registerButton": "Confirm your details",
       "termsAndConditions": "By registering, you agree to our <a href='/'>terms and conditions<a>"
     },
-    "goBack": "Go back"
+    "logout": "Logout",
+    "goBack": "Go back",
+    "invalidCredentials": "Invalid credentials"
+  },
+  "navigation": {
+    "seeAll": "See all"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "calendar": "Calendar",
+    "timer": "Start timer",
+    "statistics": "Statistics",
+    "admin": {
+      "all-users": "All users",
+      "all-categories": "All categories",
+      "create-user": "Create new user",
+      "create-category": "Create new category"
+    }
   },
   "inputPlaceholders": {
     "searchFile": "Search a file"
   },
   "dashboard": {
-    "title": "Welcome, {name}!"
+    "title": "Welcome, {name} 👋🏻",
+    "tasks": {
+      "title": "👨🏻‍🌾  Your latest tasks",
+      "nothing": "No tasks yet"
+    },
+    "statistics": {
+      "title": "📊 Statistics",
+      "nothing": "No statistics yet"
+    }
   }
 }

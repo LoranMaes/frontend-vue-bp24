@@ -29,14 +29,31 @@ const iconPath = computed(() => {
 
 <template>
   <button
-    :class="[style, type, size ?? size, { rounded: rounded }]"
     @click="$emit('button-clicked')"
-    :disabled="disabled"
+    :class="[style, type, size ?? size, { rounded: rounded }]"
+    :disabled
     :type="submit ? 'submit' : 'button'"
+    v-if="type === buttonTypes.TEXT || type === buttonTypes.TEXT_AND_ICON"
   >
     <slot></slot>
 
     <svg v-if="iconPath" :viewBox="'0 0 24 24'" :height="'20'" fill="#fafafa">
+      <path :d="iconPath"></path>
+    </svg>
+  </button>
+  <button
+    @click="$emit('button-clicked')"
+    :disabled
+    :type="submit ? 'submit' : 'button'"
+    :class="['icon-btn', style, size ?? size]"
+    v-else
+  >
+    <svg
+      v-if="iconPath"
+      :viewBox="'0 0 24 24'"
+      :height="size === buttonSizes.SMALL ? '36' : '64'"
+      fill="#fafafa"
+    >
       <path :d="iconPath"></path>
     </svg>
   </button>
@@ -52,6 +69,12 @@ button {
   border-radius: 0.5rem;
   padding: 1.6rem 3.2rem;
   font-weight: 700;
+  &.icon-btn {
+    padding: 1.6rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    width: fit-content;
+  }
   &.text,
   .icon {
     justify-content: center;
@@ -65,6 +88,10 @@ button {
   }
   &.secondary {
     background-color: var(--secondary-color);
+    color: var(--primary-white);
+  }
+  &.red {
+    background-color: var(--state-error);
     color: var(--primary-white);
   }
   &.rounded {
