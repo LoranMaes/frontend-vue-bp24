@@ -2,7 +2,8 @@ import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import basicSsl from "@vitejs/plugin-basic-ssl";
+import mkCert from "vite-plugin-mkcert";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -11,16 +12,13 @@ export default defineConfig({
       include: "./src/assets/locales/**",
       strictMessage: false,
     }),
-    basicSsl({
-      /** name of certification */
-      name: "test",
-      /** custom trust domains */
-      domains: ["localhost"],
+    mkCert({
+      savePath: "./certs",
+      force: true,
     }),
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
-
       pwaAssets: {
         disabled: false,
         config: true,
@@ -62,9 +60,26 @@ export default defineConfig({
       },
       // Cache all imports with these extensions
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,png,ico}"],
+        globPatterns: ["**/*"],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith("/api"),
+            handler: "CacheFirst" as const,
+            options: {
+              cacheName: "api-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+        navigateFallback: "index.html",
       },
 
       devOptions: {
