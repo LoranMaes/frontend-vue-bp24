@@ -6,7 +6,14 @@ import { Category } from "../models/category.model";
 
 export const useUserStore = defineStore("user", () => {
   const tasks = ref<Task[] | null>();
-  const categories = ref<Category[] | null>();
+  const categories = ref<
+    | {
+        id: string;
+        title: string;
+        sub_categories: Category[];
+      }[]
+    | null
+  >();
   const statistics = false;
 
   const initializeTasks = async (): Promise<Task[] | void> => {
@@ -35,5 +42,11 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  return { tasks, initializeTasks, statistics, initializeCategories };
+  return {
+    tasks,
+    initializeTasks,
+    statistics,
+    initializeCategories,
+    categories,
+  };
 });

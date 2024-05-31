@@ -8,7 +8,10 @@ defineProps<{
 </script>
 
 <template>
-  <div class="card">
+  <div
+    class="card"
+    :style="{ backgroundColor: task.color ? task.color : '#dfefd7' }"
+  >
     <div class="card-header">
       <p class="bold">{{ task.title }}</p>
       <p>{{ task.start }} {{ task.end }}</p>
@@ -23,4 +26,9 @@ defineProps<{
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.card {
+  display: flex;
+  flex-direction: column;
+}
+</style>

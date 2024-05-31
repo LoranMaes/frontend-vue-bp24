@@ -102,6 +102,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(to);
+  console.log(from);
   const requiresSlideDown = from.meta.slideDown;
   if (requiresSlideDown) {
     const login = document.querySelector("#login-form");

@@ -21,8 +21,11 @@ export const useAuthStore = defineStore("auth", () => {
 
   const initUser = async (): Promise<void> => {
     if (isAuthenticated.value) return;
-    await getUser();
-    console.log(user.value);
+    try {
+      await getUser();
+    } catch (error) {
+      console.error("Failed to initialize user:", error);
+    }
   };
 
   const register = async (

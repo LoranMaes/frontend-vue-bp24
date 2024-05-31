@@ -9,18 +9,20 @@ import IlvoButton from "../atoms/IlvoButton.vue";
 import IlvoHamburgerMenu from "../molecules/IlvoHamburgerMenu.vue";
 import { useRoute } from "vue-router";
 const hamburgerOpen = ref(false);
+const timerCategory = ref("");
 
 const route = useRoute();
 watch(
-  () => route.path,
+  () => [route.path, localStorage.getItem("newTimerCategory")],
   () => {
     hamburgerOpen.value = false;
+    timerCategory.value = localStorage.getItem("newTimerCategory") || "";
   }
 );
 </script>
 
 <template>
-  <header>
+  <header :class="[{ space: route.path === '/dashboard' }]">
     <IlvoButton
       :style="buttonStyleValues.PRIMARY"
       :type="buttonTypes.ICON"
@@ -42,6 +44,13 @@ watch(
         })
       }}
     </p>
+    <h1 v-else-if="route.path === '/timer'">
+      {{
+        timerCategory
+          ? $t("timer.second_step.title")
+          : $t("timer.first_step.title")
+      }}
+    </h1>
     <h1 v-else>
       {{ $t(`menu.${route.path.substring(1, route.path.length)}`) }}
     </h1>
@@ -50,6 +59,7 @@ watch(
       :type="buttonTypes.ICON"
       :mdi-icon="'mdiBellOutline'"
       :size="buttonSizes.SMALL"
+      v-if="route.path === '/dashboard'"
     />
   </header>
 </template>
@@ -59,8 +69,11 @@ header {
   display: flex;
   position: relative;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding: 2.4rem 2.4rem 0 2.4rem;
+  gap: 1.6rem;
+  &.space {
+    justify-content: space-between;
+  }
 }
 </style>

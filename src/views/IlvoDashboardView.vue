@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from "vue";
+import { computed, onMounted, ref, watchEffect } from "vue";
 import IlvoCard from "../components/molecules/IlvoCard.vue";
 import IlvoTaskCard from "../components/molecules/IlvoTaskCard.vue";
 import { useAuthStore } from "../stores/auth";
@@ -25,6 +25,12 @@ const createNewTask = () => {
   return router.push({ name: "timer" });
 };
 
+const limitedTasks = computed(() => {
+  if (!user_store.tasks || user_store.tasks.length <= 3)
+    return user_store.tasks;
+  return user_store.tasks.slice(0, 3);
+});
+
 onMounted(async () => {
   await user_store.initializeTasks();
   cards_loading.value.tasks = false;
@@ -43,7 +49,11 @@ onMounted(async () => {
         {{ $t("dashboard.tasks.nothing") }}
       </p>
       <div class="cards" v-else>
-        <IlvoTaskCard v-for="task in user_store.tasks" :task />
+        <IlvoTaskCard
+          v-for="(task, index) in limitedTasks"
+          :key="index"
+          :task="task"
+        />
       </div>
     </IlvoCard>
     <IlvoCard
@@ -66,6 +76,7 @@ onMounted(async () => {
       :size="buttonSizes.LARGE"
       id="add-task"
       v-if="auth_store.user?.role === 'user'"
+      @click="createNewTask"
     />
   </section>
 </template>

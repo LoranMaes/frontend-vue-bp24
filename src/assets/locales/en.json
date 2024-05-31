@@ -64,5 +64,24 @@
       "title": "📊 Statistics",
       "nothing": "No statistics yet"
     }
+  },
+  "development": "This feature is still in development 🛠️",
+  "timer": {
+    "first_step": {
+      "title": "Choose a category",
+      "sub_title": "🏆 Your top categories",
+      "other": "📂 Other categories",
+      "no_categories": "No categories yet"
+    },
+    "second_step": {
+      "title": "Start your timer"
+    },
+    "input": {
+      "button": {
+        "start": "Start",
+        "stop": "Stop",
+        "change": "Change"
+      }
+    }
   }
 }
