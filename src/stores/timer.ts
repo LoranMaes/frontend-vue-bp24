@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-export const useUserStore = defineStore("timer", () => {
+export const useTimerStore = defineStore("timer", () => {
   const timer = ref<number>(0);
   const isRunning = ref<boolean>(false);
+  const localCategory = ref<{ id: string; sub_cat_id?: string } | null>(null);
+  const currentTask = ref<string | null>(null);
 
   const startTimer = () => {
     isRunning.value = true;
@@ -19,5 +21,12 @@ export const useUserStore = defineStore("timer", () => {
     clearInterval(interval);
   };
 
-  return { timer, isRunning, startTimer, stopTimer };
+  return {
+    timer,
+    isRunning,
+    startTimer,
+    stopTimer,
+    localCategory,
+    currentTask,
+  };
 });

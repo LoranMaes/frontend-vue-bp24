@@ -1,23 +1,29 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import IlvoCategoryPicker from "../components/organisms/IlvoCategoryPicker.vue";
+import { useTimerStore } from "../stores/timer";
 
-const category = ref({});
+const timer_store = useTimerStore();
 
 onMounted(() => {
-  // Get category from local storage
+  // If there is a category in local storage use it and put it in the store
   const categoryFromLocalStorage = localStorage.getItem("newTimerCategory");
   if (categoryFromLocalStorage) {
-    category.value = categoryFromLocalStorage;
+    timer_store.localCategory = JSON.parse(categoryFromLocalStorage);
   }
 });
 </script>
 
 <template>
   <!-- Show right header depending if a category from new timer is already in localstorage -->
-  <div v-if="Object.keys(category).length" class="timer-input-form">
+  <div
+    v-if="
+      timer_store.localCategory && Object.keys(timer_store.localCategory).length
+    "
+    class="timer-input-form"
+  >
     <h1>Timer</h1>
-    <p>Category: {{ category }}</p>
+    <p>Category: {{ timer_store.localCategory }}</p>
   </div>
   <template v-else>
     <div class="top-categories">
@@ -26,17 +32,15 @@ onMounted(() => {
     </div>
     <div class="other-categories">
       <h2>{{ $t("timer.first_step.other") }}</h2>
-      <IlvoCategoryPicker
-        type="other"
-        @category-selected="(e) => (category = e)"
-      />
+      <IlvoCategoryPicker type="other" />
     </div>
   </template>
 </template>
 
 <style lang="scss" scoped>
 .top-categories,
-.other-categories {
+.other-categories,
+.timer-input-form {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useUserStore } from "../../stores/user";
-import { defineProps, defineEmits } from "vue";
+import { defineProps } from "vue";
 import IlvoCategoryPicker from "../atoms/IlvoCategoryPicker.vue";
+import { useTimerStore } from "../../stores/timer";
 
 const loading = ref(true);
 const user_store = useUserStore();
-
-const emits = defineEmits(["categorySelected"]);
+const timer_store = useTimerStore();
 
 defineProps<{
   type: "top" | "other";
@@ -19,9 +19,12 @@ onMounted(async () => {
     .finally(() => (loading.value = false));
 });
 
-const handleCategorySelected = (category: Object) => {
+const handleCategorySelected = (category: {
+  id: string;
+  sub_cat_id?: string;
+}) => {
   localStorage.setItem("newTimerCategory", JSON.stringify(category));
-  emits("categorySelected", category);
+  timer_store.localCategory = category;
 };
 </script>
 
