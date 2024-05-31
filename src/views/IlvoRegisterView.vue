@@ -19,7 +19,7 @@ import IlvoRegisterForm from "../components/organisms/IlvoRegisterForm.vue";
   gap: 3.2rem;
   width: 100%;
   bottom: 0;
-  left: 0;
+  max-width: 64rem;
   padding: 6.4rem 2.4rem;
   border-top-left-radius: 1.6rem;
   border-top-right-radius: 1.6rem;
