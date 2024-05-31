@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineProps, ref } from "vue";
+import { computed, ref } from "vue";
 import { isValidMdiIcon } from "../../composables/validators";
 import * as mdiIcons from "@mdi/js";
 
@@ -33,6 +33,7 @@ const showPassword = ref(false);
     :placeholder
     :class="[error ? 'error' : '']"
     v-model="model"
+    :name="id"
   ></textarea>
   <div
     v-else
@@ -55,6 +56,7 @@ const showPassword = ref(false);
       :placeholder
       :class="[error ? 'error' : '']"
       v-model="model"
+      :name="id"
     />
     <svg
       v-if="iconPath && iconSide === 'right' && type !== 'password'"

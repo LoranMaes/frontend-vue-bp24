@@ -19,7 +19,7 @@ const routes = [
         name: "login",
         components: {
           default: () => import("./views/IlvoLandingPageView.vue"),
-          modal: () => import("./components/organisms/IlvoLoginForm.vue"),
+          modal: () => import("./views/IlvoLoginView.vue"),
         },
         meta: {
           slideDown: true,
@@ -30,7 +30,7 @@ const routes = [
         name: "register",
         components: {
           default: () => import("./views/IlvoLandingPageView.vue"),
-          modal: () => import("./components/organisms/IlvoRegisterForm.vue"),
+          modal: () => import("./views/IlvoRegisterView.vue"),
         },
         meta: {
           slideDown: true,
@@ -102,8 +102,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  console.log(from);
   const requiresSlideDown = from.meta.slideDown;
   if (requiresSlideDown) {
     const login = document.querySelector("#login-form");

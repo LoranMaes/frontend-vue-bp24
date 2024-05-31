@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Task } from "../../models/task.model";
-import { defineProps } from "vue";
 
 defineProps<{
   task: Task;

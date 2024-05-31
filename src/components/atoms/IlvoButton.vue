@@ -100,5 +100,9 @@ button {
   &.full-width {
     width: 100%;
   }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 </style>

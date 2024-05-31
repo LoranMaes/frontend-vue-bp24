@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
 import IlvoButton from "../atoms/IlvoButton.vue";
 import {
   buttonSizes,

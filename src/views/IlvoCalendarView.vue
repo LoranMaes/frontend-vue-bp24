@@ -2,18 +2,33 @@
 // This is a JavaScript module so in TypeScript config I added "allowJs": true
 // Documentation:
 // https://antoniandre.github.io/vue-cal/
-
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
+import { useUserStore } from "../stores/user";
+import { computed } from "vue";
 
-const specialHours = {
-  1: {
-    from: 8 * 60,
-    to: 17 * 60,
-    label: "Doctor 1<br>Full day shift",
-    class: "task-background",
-  },
-};
+const user_store = useUserStore();
+
+const specialHours = computed(() => {
+  const tasks = user_store.tasks;
+  if (!tasks) return {};
+
+  const specialHours = {};
+  tasks.forEach((task) => {
+    const dayOfWeek = new Date(task.start).getDay();
+    const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
+
+    specialHours[adjustedDayOfWeek] = {
+      from:
+        new Date(task.start).getHours() * 60 +
+        new Date(task.start).getMinutes(),
+      to: new Date(task.end).getHours() * 60 + new Date(task.end).getMinutes(),
+      label: task.title,
+      class: "task-background",
+    };
+  });
+  return specialHours;
+});
 </script>
 
 <template>

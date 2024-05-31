@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IlvoInput from "../atoms/IlvoInput.vue";
-import { defineProps } from "vue";
+import { defineModel } from "vue";
 
 const props = defineProps<{
   type: "text" | "password" | "email" | "file" | "date" | "color" | "textarea";

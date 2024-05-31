@@ -11,9 +11,11 @@ import {
   buttonTypes,
 } from "../models/property.enum";
 import { useRouter } from "vue-router";
+import { useTimerStore } from "../stores/timer";
 
 const auth_store = useAuthStore();
 const user_store = useUserStore();
+const timer_store = useTimerStore();
 const user = auth_store.user;
 const cards_loading = ref({
   tasks: true,
@@ -38,7 +40,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section id="dashboard">
+  <section id="dashboard" :class="[{ 'timer-running': timer_store.isRunning }]">
     <h1>{{ $t("dashboard.title", { name: user?.firstName }) }}</h1>
     <IlvoCard :title="$t('dashboard.tasks.title')" router-link="calendar">
       <!-- Add tasks here -->
@@ -75,7 +77,7 @@ onMounted(async () => {
       mdi-icon="mdiPlus"
       :size="buttonSizes.LARGE"
       id="add-task"
-      v-if="auth_store.user?.role === 'user'"
+      v-if="auth_store.user?.role === 'user' && !timer_store.isRunning"
       @click="createNewTask"
     />
   </section>
@@ -87,8 +89,12 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 2.4rem 2.4rem 12rem 2.4rem;
+  padding: 2.4rem;
+  padding-bottom: 12rem;
   gap: 3.2rem;
+  &.timer-running {
+    padding-bottom: 6.4rem;
+  }
   p.empty {
     text-align: center;
   }

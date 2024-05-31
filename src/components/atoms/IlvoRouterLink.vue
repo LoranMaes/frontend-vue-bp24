@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { RouteLocation } from "vue-router";
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import {
   linkTypes,
   buttonSizes,

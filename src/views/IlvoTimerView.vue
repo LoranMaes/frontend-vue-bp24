@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted } from "vue";
 import IlvoCategoryPicker from "../components/organisms/IlvoCategoryPicker.vue";
+import IlvoTimer from "../components/molecules/IlvoTimer.vue";
+import IlvoTimerForm from "../components/organisms/IlvoTimerForm.vue";
+
 import { useTimerStore } from "../stores/timer";
 
 const timer_store = useTimerStore();
@@ -22,8 +25,8 @@ onMounted(() => {
     "
     class="timer-input-form"
   >
-    <h1>Timer</h1>
-    <p>Category: {{ timer_store.localCategory }}</p>
+    <IlvoTimer v-if="!timer_store.timer || timer_store.isRunning" />
+    <IlvoTimerForm />
   </div>
   <template v-else>
     <div class="top-categories">

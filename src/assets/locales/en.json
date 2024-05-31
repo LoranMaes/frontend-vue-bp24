@@ -22,12 +22,15 @@
       "passwordHint": "Your password must be between 8 and 30 characters long",
       "registerButton": "Register",
       "emailError": "This is not a valid email address",
-      "passwordError": "Your password must be between 8 and 30 characters long"
+      "passwordError": "Your password must be between 8 and 30 characters long",
+      "repeatPasswordError": "Your password don't match"
     },
     "registerCompletion": {
       "title": "Welcome!",
       "firstName": "First name",
       "lastName": "Last name",
+      "firstNameError": "Name should be at least 2 characters",
+      "lastNameError": "Name should be at least 2 characters",
       "profilePicture": "Profile picture",
       "registerButton": "Confirm your details",
       "termsAndConditions": "By registering, you agree to our <a href='/'>terms and conditions<a>"
@@ -74,13 +77,24 @@
       "no_categories": "No categories yet"
     },
     "second_step": {
-      "title": "Start your timer"
+      "title": "Start your timer",
+      "start_time": "Start time",
+      "end_time": "End time"
     },
     "input": {
       "button": {
         "start": "Start",
         "stop": "Stop",
         "change": "Change"
+      },
+      "total": "Total: {total}",
+      "form": {
+        "title": "Title",
+        "placeholderTitle": "What are you working on?",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe your task",
+        "color": "Choose a color",
+        "submit": "Save your task"
       }
     }
   }

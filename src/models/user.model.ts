@@ -20,6 +20,14 @@ export interface UserCreation {
   password: string;
 }
 
+export interface UserCreationPart2 {
+  firstName: string;
+  lastName: string;
+  email: string;
+  profilePicture?: File;
+  password: string;
+}
+
 export interface UserLogin {
   email: string;
   password: string;
