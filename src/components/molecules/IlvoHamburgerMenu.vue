@@ -19,7 +19,7 @@ import {
 import { useRouter } from "vue-router";
 
 defineEmits(["closeHamburgerMenu"]);
-const props = defineProps<{
+defineProps<{
   hamburgerOpen: boolean;
 }>();
 

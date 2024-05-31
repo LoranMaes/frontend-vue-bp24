@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import {
   buttonStyleValues,
   buttonTypes,
@@ -53,13 +53,7 @@ const login = async () => {
 </script>
 
 <template>
-  <form
-    action="#"
-    @submit.prevent
-    method="post"
-    autocomplete="on"
-    @submit="login"
-  >
+  <form action="#" method="post" autocomplete="on" @submit.prevent="login">
     <div class="input-fields">
       <!-- Email -->
       <IlvoInputField

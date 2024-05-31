@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from "vue";
+import { computed, onMounted, ref } from "vue";
 import IlvoCard from "../components/molecules/IlvoCard.vue";
 import IlvoTaskCard from "../components/molecules/IlvoTaskCard.vue";
 import { useAuthStore } from "../stores/auth";

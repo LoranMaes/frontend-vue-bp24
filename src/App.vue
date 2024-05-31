@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IlvoHeader from "./components/organisms/IlvoHeader.vue";
 import IlvoTimerBanner from "./components/atoms/IlvoTimerBanner.vue";
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref } from "vue";
 import { useAuthStore } from "./stores/auth";
 import { useRouter } from "vue-router";
 import { useTimerStore } from "./stores/timer";

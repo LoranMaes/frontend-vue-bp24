@@ -2,7 +2,7 @@
 import IlvoInput from "../atoms/IlvoInput.vue";
 import { defineModel } from "vue";
 
-const props = defineProps<{
+defineProps<{
   type: "text" | "password" | "email" | "file" | "date" | "color" | "textarea";
   id: string;
   placeholder: string;

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { defineEmits } from "vue";
 import { Category } from "../../models/category.model";
 import { mdiChevronRight } from "@mdi/js";
 
 defineEmits(["categorySelected"]);
-
-const props = defineProps<{
+defineProps<{
   category: {
     id: string;
     title: string;

@@ -130,13 +130,7 @@ const handleForm = async (data: Event) => {
     </div>
   </div>
 
-  <form
-    action="#"
-    @submit.prevent
-    method="post"
-    autocomplete="on"
-    @submit="handleForm"
-  >
+  <form action="#" method="post" autocomplete="on" @submit.prevent="handleForm">
     <input
       type="hidden"
       name="start"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import {
   buttonStyleValues,
   buttonTypes,
@@ -82,7 +82,7 @@ const register = async () => {
 
   //TODO: Put it in local storage for different form
   try {
-    const register = await authStore.register(register_form.value);
+    await authStore.register(register_form.value);
     return router.push({ name: "dashboard" });
   } catch (error) {
     registerError.value = true;
@@ -92,13 +92,7 @@ const register = async () => {
 </script>
 
 <template>
-  <form
-    action="#"
-    @submit.prevent
-    method="post"
-    autocomplete="on"
-    @submit="register"
-  >
+  <form action="#" method="post" autocomplete="on" @submit.prevent="register">
     <div class="input-fields">
       <!-- First Name -->
       <IlvoInputField
