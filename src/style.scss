@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #ef8451;
+  --primary-color: #c54a11;
   --secondary-color: #358068;
   --state-info: #a285d0;
   --state-warning: #5356db;
-  --state-error: #f44336;
+  --state-error: #df1a0c;
   --primary-black: #222831;
   --off-white: #f9f8f5;
   --primary-white: #fafafa;
@@ -68,6 +68,29 @@ body {
   max-width: 64rem;
   width: 100%;
   margin: 0 auto;
+  &[aria-expanded="true"] {
+    #app::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(2px);
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+label {
+  margin: 0;
+  padding: 0;
 }
 
 h1 {

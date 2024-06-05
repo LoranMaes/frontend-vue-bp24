@@ -1,22 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { useUserStore } from "../../stores/user";
 import IlvoCategoryPicker from "../atoms/IlvoCategoryPicker.vue";
 import { useTimerStore } from "../../stores/timer";
 
-const loading = ref(true);
 const user_store = useUserStore();
 const timer_store = useTimerStore();
 
 defineProps<{
   type: "top" | "other";
 }>();
-
-onMounted(async () => {
-  await user_store
-    .initializeCategories()
-    .finally(() => (loading.value = false));
-});
 
 const handleCategorySelected = (category: {
   id: string;
@@ -28,10 +20,7 @@ const handleCategorySelected = (category: {
 </script>
 
 <template>
-  <div class="loading" v-if="loading">
-    <span class="loader"></span>
-  </div>
-  <div class="categories" v-else>
+  <div class="categories">
     <p v-if="!user_store.categories?.length">
       {{ $t("timer.first_step.no_categories") }}
     </p>

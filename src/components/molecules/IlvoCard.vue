@@ -23,7 +23,7 @@ defineProps<{
 .ilvo-card {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.6rem;
   padding: 0.8rem;
   border-radius: 0.8rem;
   box-shadow: var(--shadow-md-bottom);

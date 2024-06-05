@@ -13,12 +13,22 @@ const timerCategory = ref("");
 
 const route = useRoute();
 watch(
-  () => [route.path, localStorage.getItem("newTimerCategory")],
+  () => route.path,
   () => {
     hamburgerOpen.value = false;
     timerCategory.value = localStorage.getItem("newTimerCategory") || "";
   }
 );
+
+watch(hamburgerOpen, () => {
+  if (hamburgerOpen.value) {
+    document.body.style.overflow = "hidden";
+    document.body.ariaExpanded = "true";
+  } else {
+    document.body.style.overflow = "auto";
+    document.body.ariaExpanded = "false";
+  }
+});
 </script>
 
 <template>

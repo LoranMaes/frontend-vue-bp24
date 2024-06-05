@@ -7,27 +7,22 @@ export const useAuthStore = defineStore("auth", () => {
   const user = ref<User | null>(null);
   const isAuthenticated = computed(() => !!user.value);
   // This checks if the user is valid, if not the user gets a form with more details.
-  const isValidUser = computed(() => {
-    if (!user.value || user.value.firstName || user.value.lastName)
-      return false;
-  });
+  const isValidUser = computed(
+    () => !user.value || !user.value.firstName || !user.value.lastName
+  );
+
+  const loading = ref(true);
 
   const getUser = async (): Promise<User | void> => {
-    const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
-    const authSessionCookie = cookies.find((cookie) =>
-      cookie.startsWith("auth_session=")
-    );
-    // console.log(cookies, authSessionCookie);
-    // TODO This check needs to be fixed so that there is no error
-    // if (!authSessionCookie) return;
+    loading.value = true;
     try {
       const resp = await apiAxios.get("/auth/user");
       if (resp.status !== 200) return;
       return (user.value = resp.data.data);
     } catch (error) {
-      document.cookie =
-        "auth_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       throw new Error("Invalid credentials");
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -92,5 +87,6 @@ export const useAuthStore = defineStore("auth", () => {
     logout,
     initUser,
     isValidUser,
+    loading,
   };
 });

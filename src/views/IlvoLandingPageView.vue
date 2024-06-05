@@ -8,7 +8,6 @@ import { buttonStyleValues, linkTypes } from "../models/property.enum";
   <section id="landing-page">
     <div class="upper">
       <img :src="logo_timeregistration" alt="Logo for time registration app" />
-      <!-- Removing the header for good HTML because the modals already have a h1 -->
       <h1>{{ $t("landingPage.title") }}</h1>
     </div>
     <div class="landing-actions">

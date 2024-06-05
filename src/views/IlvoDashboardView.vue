@@ -103,5 +103,10 @@ onMounted(async () => {
     bottom: 1.6rem;
     right: 1.6rem;
   }
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
 }
 </style>
