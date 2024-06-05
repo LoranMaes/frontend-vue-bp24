@@ -25,4 +25,10 @@ export namespace Helpers {
     const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
     return luminance > 0.5 ? "light" : "dark";
   }
+
+  export function dateStringToCalendarDate(date: Date): string {
+    return `${new Date(date).toISOString().split("T")[0]} ${
+      new Date(date).toISOString().split("T")[1].split(".")[0]
+    }`;
+  }
 }

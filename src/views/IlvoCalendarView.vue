@@ -6,28 +6,27 @@ import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { useUserStore } from "../stores/user";
 import { computed } from "vue";
+import { Helpers } from "../composables/helpers";
 
 const user_store = useUserStore();
 
-const specialHours = computed(() => {
-  const tasks = user_store.tasks;
-  if (!tasks) return {};
+const tasks = computed(() => {
+  if (!user_store.tasks) return [];
+  return user_store.tasks.map((task) => {
+    const start = new Date(task.start);
+    const end = new Date(task.end);
+    const durationInMinutes = (end.getTime() - start.getTime()) / 1000 / 60;
+    // Less than 30 minutes tasks are not displayed
+    if (durationInMinutes < 30);
 
-  const specialHours = {};
-  tasks.forEach((task) => {
-    const dayOfWeek = new Date(task.start).getDay();
-    const adjustedDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
-
-    specialHours[adjustedDayOfWeek] = {
-      from:
-        new Date(task.start).getHours() * 60 +
-        new Date(task.start).getMinutes(),
-      to: new Date(task.end).getHours() * 60 + new Date(task.end).getMinutes(),
-      label: task.title,
-      class: "task-background",
+    return {
+      start: Helpers.dateStringToCalendarDate(task.start),
+      end: Helpers.dateStringToCalendarDate(task.end),
+      title: task.title,
+      content: task.description?.substring(0, 25),
+      contentFull: task.description,
     };
   });
-  return specialHours;
 });
 </script>
 
@@ -35,9 +34,9 @@ const specialHours = computed(() => {
   <div class="calendar">
     <VueCal
       active-view="day"
-      :disable-views="['years', 'year', 'month', 'week']"
-      :special-hours="specialHours"
-    ></VueCal>
+      :disable-views="['years', 'year', 'month']"
+      :events="tasks"
+    />
   </div>
 </template>
 
@@ -49,12 +48,6 @@ const specialHours = computed(() => {
     border-radius: 0.8rem;
     overflow: hidden;
   }
-}
-
-.vuecal__flex.vuecal__menu {
-  visibility: hidden;
-  position: absolute;
-  z-index: -1;
 }
 
 .vuecal__title-bar {
