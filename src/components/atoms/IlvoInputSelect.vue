@@ -33,4 +33,18 @@ model.value = props.selected;
   </select>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+select {
+  position: relative;
+  font-family: "Raleway", sans-serif;
+  border: 1px solid var(--gray-3);
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow-sm);
+  background-color: var(--primary-white);
+  padding: 1.2rem 1.8rem;
+  font-size: 1.6rem;
+  &.error {
+    border-color: var(--state-error);
+  }
+}
+</style>

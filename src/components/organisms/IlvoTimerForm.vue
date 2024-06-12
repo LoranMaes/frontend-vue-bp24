@@ -60,13 +60,18 @@ const timerForm = ref<{
   title: "",
   description: "",
   color: "",
-  category: 0,
+  category: -1,
+});
+
+const selected_sub_category_id = computed(() => {
+  return select_titles.value[timerForm.value.category]?.sub_cat_id;
 });
 
 const error_form = ref<string>("");
 
 const router = useRouter();
 
+// Validform for the button
 const isValidForm = computed(() => {
   return (
     timer_store.startTime &&
@@ -75,12 +80,14 @@ const isValidForm = computed(() => {
     timerForm.value.title.length <= 25 &&
     timerForm.value.description.length >= 10 &&
     timerForm.value.description.length <= 100 &&
-    timer_store.startTime < timer_store.endTime
+    timer_store.startTime < timer_store.endTime &&
+    timerForm.value.category >= 0 &&
+    timerForm.value.category <= select_titles.value.length
   );
 });
 
 const handleForm = async (data: Event) => {
-  // Validation
+  // Double validation for right error codes
   if (!timer_store.startTime || !timer_store.endTime) {
     error_form.value = "Please select a start and end time";
     return;
@@ -104,6 +111,9 @@ const handleForm = async (data: Event) => {
   // Change the start and end time to the correct format
   formData.set("start", timer_store.startTime.toISOString().slice(0, -5) + "Z");
   formData.set("end", timer_store.endTime.toISOString().slice(0, -5) + "Z");
+
+  // Set category id's in formData
+  formData.delete("categories");
   try {
     const resp = await timer_store.sendTimer(formData);
 
@@ -116,22 +126,19 @@ const handleForm = async (data: Event) => {
 </script>
 
 <template>
-  <!-- Put this in another component -->
-  <div
-    class="timer_cards"
-    v-if="(!timer_store.isRunning && !timer_store.timer) || timer_store.timer"
-  >
+  <!-- TODO: Put this in another component -->
+  <div class="timer_cards" v-if="!timer_store.isRunning && timer_store.timer">
     <div class="timer_card">
       <h2>{{ $t("timer.second_step.start_time") }}</h2>
       <div class="group">
         <h2>{{ timer_store.startTime.toLocaleTimeString("nl") }}</h2>
-        <IlvoButton
+        <!-- <IlvoButton
           :type="buttonTypes.TEXT"
           :style="buttonStyleValues.PRIMARY"
           @button-clicked="() => console.log('change')"
           :disabled="true"
           >{{ $t("timer.input.button.change") }}</IlvoButton
-        >
+        > -->
       </div>
     </div>
     <div class="bottom-card">
@@ -139,13 +146,13 @@ const handleForm = async (data: Event) => {
         <h2>{{ $t("timer.second_step.end_time") }}</h2>
         <div class="group">
           <h2>{{ timer_store.endTime.toLocaleTimeString("nl") }}</h2>
-          <IlvoButton
+          <!-- <IlvoButton
             :type="buttonTypes.TEXT"
             :style="buttonStyleValues.PRIMARY"
             @button-clicked="() => console.log('change')"
             :disabled="true"
             >{{ $t("timer.input.button.change") }}</IlvoButton
-          >
+          > -->
         </div>
       </div>
       <p v-if="!timer_store.isRunning && timer_store.timer">
@@ -165,12 +172,14 @@ const handleForm = async (data: Event) => {
     <input
       type="hidden"
       name="categoryId"
-      :value="timer_store.localCategory?.id"
+      v-if="timerForm.category >= 0"
+      :value="select_titles[timerForm.category].id"
     />
     <input
       type="hidden"
       name="subCategoryId"
-      :value="timer_store.localCategory?.sub_cat_id"
+      v-if="selected_sub_category_id"
+      :value="selected_sub_category_id"
     />
 
     <IlvoInputField
@@ -179,6 +188,12 @@ const handleForm = async (data: Event) => {
       :placeholder="$t('timer.input.form.placeholderTitle')"
       :label="$t('timer.input.form.title')"
       v-model:input="timerForm.title"
+      :error="
+        timerForm.title
+          ? timerForm.title.length < 3 || timerForm.title.length > 25
+          : false
+      "
+      :error-helper="$t('timer.input.form.titleError')"
     />
 
     <IlvoInputField
@@ -187,6 +202,13 @@ const handleForm = async (data: Event) => {
       :placeholder="$t('timer.input.form.descriptionPlaceholder')"
       :label="$t('timer.input.form.description')"
       v-model:input="timerForm.description"
+      :error="
+        timerForm.description
+          ? timerForm.description.length < 10 ||
+            timerForm.description.length > 100
+          : false
+      "
+      :error-helper="$t('timer.input.form.descriptionError')"
     />
 
     <IlvoInputField

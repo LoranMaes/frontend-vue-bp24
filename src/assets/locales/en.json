@@ -90,9 +90,11 @@
       "total": "Total: {total}",
       "form": {
         "title": "Title",
+        "titleError": "Title should be between 3 and 25 characters long",
         "placeholderTitle": "What are you working on?",
         "description": "Description",
         "descriptionPlaceholder": "Describe your task",
+        "descriptionError": "Description should be between 10 and 100 characters long",
         "color": "Choose a color",
         "colorPlaceholder": "Choose a color",
         "category": "Choose a category",

@@ -31,11 +31,16 @@ export const useTimerStore = defineStore("timer", () => {
   const localCategory = ref<{ id: string; sub_cat_id?: string } | null>(null);
 
   const formattedTimer = computed(() => {
-    const minutes = Math.floor(timer.value / 60);
-    const seconds = timer.value % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
+    const hours = Math.floor(timer.value / 3600);
+    const minutes = Math.floor(
+      hours ? (timer.value % 3600) / 60 : timer.value / 60
+    );
+    const seconds = hours ? (timer.value % 3600) % 60 : timer.value % 60;
+    return hours >= 24
+      ? "More than 1 day"
+      : `${hours ? hours.toString().padStart(2, "0") + ":" : ""}${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   });
 
   let intervalId: number | null = null;

@@ -26,12 +26,14 @@ const sub_cat_title = computed(() => {
 
 <template>
   <div
-    class="card"
     :style="{
       backgroundColor: task.color ? task.color : '#dfefd7',
       boxShadow: '0 0 0.8rem ' + task.color,
     }"
-    :class="[Helpers.getContrastingColor(task.color ? task.color : '#dfefd7')]"
+    :class="[
+      'card',
+      Helpers.getContrastingColor(task.color ? task.color : '#dfefd7'),
+    ]"
   >
     <div class="card-header">
       <p class="bold">{{ task.title }}</p>

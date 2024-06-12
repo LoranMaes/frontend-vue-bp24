@@ -28,6 +28,16 @@ const limitedTasks = computed(() => {
     return user_store.tasks;
   return user_store.tasks.slice(0, 3);
 });
+
+onMounted(() => {
+  try {
+    if (auth_store.isAuthenticated) {
+      user_store.initializeTasks();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 
 <template>

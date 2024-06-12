@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { isValidMdiIcon } from "../../composables/validators";
 import * as mdiIcons from "@mdi/js";
 import IlvoInputSelect from "./IlvoInputSelect.vue";
+import { Helpers } from "../../composables/helpers";
 
 const props = defineProps<{
   type:
@@ -33,6 +34,18 @@ const iconPath = computed(() => {
   return null;
 });
 const showPassword = ref(false);
+
+const color_mode = ref("dark");
+watch(
+  () => model.value,
+  () => {
+    if (props.type === "color") {
+      const hex = model.value + "";
+      const color = Helpers.getContrastingColor(hex ? hex : "#000000");
+      color_mode.value = color;
+    }
+  }
+);
 </script>
 
 <template>
@@ -59,8 +72,19 @@ const showPassword = ref(false);
   />
   <div
     v-else
-    :class="['input-field', { 'icon-left': iconSide === 'left' && iconPath }]"
+    :class="[
+      'input-field',
+      {
+        'icon-left': iconSide === 'left' && iconPath,
+      },
+    ]"
   >
+    <!-- This is for the text over the input color field -->
+    <span
+      :class="['input-field-color bold', color_mode]"
+      v-if="type === 'color'"
+      >{{ model ? model : "#000000" }}</span
+    >
     <svg
       v-if="iconPath && iconSide === 'left' && type !== 'password'"
       :viewBox="'0 0 24 24'"
@@ -122,6 +146,7 @@ textarea {
     border-color: var(--state-error);
   }
   &[type="color"] {
+    position: relative;
     padding: 0;
     border: none;
     width: 100%;
@@ -157,6 +182,22 @@ textarea {
     padding: 0;
     svg {
       position: relative;
+    }
+  }
+  & span.input-field-color {
+    color: var(--primary-white);
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    font-size: 1.6rem;
+    pointer-events: none;
+    &.dark {
+      color: var(--primary-white);
+    }
+    &.light {
+      color: var(--primary-black);
     }
   }
 }

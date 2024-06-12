@@ -63,6 +63,7 @@ const model = defineModel("input", { required: true });
   }
   label {
     cursor: pointer;
+    width: fit-content;
   }
 }
 </style>

@@ -32,6 +32,7 @@ a {
 }
 #timer_banner {
   display: flex;
+  z-index: 1000;
   flex-direction: row;
   position: fixed;
   align-items: center;
