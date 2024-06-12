@@ -90,8 +90,6 @@ export const useTimerStore = defineStore("timer", () => {
       return true;
     } catch (error: any) {
       throw new Error("Invalid form data");
-    } finally {
-      return false;
     }
   };
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserStore } from "../../stores/user";
-import IlvoCategoryPicker from "../atoms/IlvoCategoryPicker.vue";
+import IlvoCategoryPicker from "../atoms/IlvoCategoryPickerButton.vue";
 import { useTimerStore } from "../../stores/timer";
 
 const user_store = useUserStore();
@@ -20,19 +20,36 @@ const handleCategorySelected = (category: {
 </script>
 
 <template>
-  <div class="categories">
+  <template v-if="type === 'top'">
+    <!-- Top categories -->
     <p v-if="!user_store.categories?.length">
       {{ $t("timer.first_step.no_categories") }}
     </p>
     <div v-else class="categories">
       <IlvoCategoryPicker
-        v-for="(category, index) in user_store.categories"
+        v-for="(category, index) in user_store.topCategories"
         :key="index"
-        :category="category"
+        :top_category="category"
         @category-selected="handleCategorySelected"
       />
     </div>
-  </div>
+  </template>
+  <template v-else>
+    <!-- Categories -->
+    <div class="categories">
+      <p v-if="!user_store.categories?.length">
+        {{ $t("timer.first_step.no_categories") }}
+      </p>
+      <div v-else class="categories">
+        <IlvoCategoryPicker
+          v-for="(category, index) in user_store.categories"
+          :key="index"
+          :category="category"
+          @category-selected="handleCategorySelected"
+        />
+      </div>
+    </div>
+  </template>
 </template>
 
 <style lang="scss" scoped>

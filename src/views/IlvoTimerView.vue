@@ -31,7 +31,7 @@ onMounted(() => {
   <template v-else>
     <div class="top-categories">
       <h2>{{ $t("timer.first_step.sub_title") }}</h2>
-      <p>{{ $t("development") }}</p>
+      <IlvoCategoryPicker type="top" />
     </div>
     <div class="other-categories">
       <h2>{{ $t("timer.first_step.other") }}</h2>

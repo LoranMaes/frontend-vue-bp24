@@ -51,7 +51,7 @@ const isValidForm = computed(() => {
     timer_store.endTime &&
     timerForm.value.title.length >= 3 &&
     timerForm.value.title.length <= 25 &&
-    timerForm.value.description.length >= 3 &&
+    timerForm.value.description.length >= 10 &&
     timerForm.value.description.length <= 100 &&
     timer_store.startTime < timer_store.endTime
   );
@@ -72,7 +72,7 @@ const handleForm = async (data: Event) => {
     timerForm.value.description.length > 100
   ) {
     error_form.value =
-      "Please enter a description with between 3 and 100 characters";
+      "Please enter a description with between 3 and 100 characters"; 
     return;
   }
 
@@ -84,6 +84,8 @@ const handleForm = async (data: Event) => {
   formData.set("end", timer_store.endTime.toISOString().slice(0, -5) + "Z");
   try {
     const resp = await timer_store.sendTimer(formData);
+    
+    if (!resp) return;
     return router.push({ name: "dashboard" });
   } catch (error: any) {
     error_form.value = error?.message;

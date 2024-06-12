@@ -1,4 +1,23 @@
 {
+  "development": "This feature is still in development 🛠️",
+  "navigation": {
+    "seeAll": "See all"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "calendar": "Calendar",
+    "timer": "Start timer",
+    "statistics": "Statistics",
+    "admin": {
+      "all-users": "All users",
+      "all-categories": "All categories",
+      "create-user": "Create new user",
+      "create-category": "Create new category"
+    }
+  },
+  "inputPlaceholders": {
+    "searchFile": "Search a file"
+  },
   "landingPage": {
     "title": "Time registration",
     "loginButton": "Already have an account?",
@@ -39,24 +58,6 @@
     "goBack": "Go back",
     "invalidCredentials": "Invalid credentials"
   },
-  "navigation": {
-    "seeAll": "See all"
-  },
-  "menu": {
-    "dashboard": "Dashboard",
-    "calendar": "Calendar",
-    "timer": "Start timer",
-    "statistics": "Statistics",
-    "admin": {
-      "all-users": "All users",
-      "all-categories": "All categories",
-      "create-user": "Create new user",
-      "create-category": "Create new category"
-    }
-  },
-  "inputPlaceholders": {
-    "searchFile": "Search a file"
-  },
   "dashboard": {
     "title": "Welcome, {name} 👋🏻",
     "tasks": {
@@ -68,7 +69,6 @@
       "nothing": "No statistics yet"
     }
   },
-  "development": "This feature is still in development 🛠️",
   "timer": {
     "first_step": {
       "title": "Choose a category",
@@ -97,5 +97,8 @@
         "submit": "Save your task"
       }
     }
+  },
+  "calendar": {
+    "message": "⏱️ Only tasks longer than 30 minutes are shown in the calendar"
   }
 }

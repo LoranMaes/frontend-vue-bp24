@@ -6,32 +6,36 @@ import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { useUserStore } from "../stores/user";
 import { computed } from "vue";
-import { Helpers } from "../composables/helpers";
 
 const user_store = useUserStore();
 
 const tasks = computed(() => {
   if (!user_store.tasks) return [];
-  return user_store.tasks.map((task) => {
-    const start = new Date(task.start);
-    const end = new Date(task.end);
-    const durationInMinutes = (end.getTime() - start.getTime()) / 1000 / 60;
-    // Less than 30 minutes tasks are not displayed
-    if (durationInMinutes < 30);
-
-    return {
-      start: Helpers.dateStringToCalendarDate(task.start),
-      end: Helpers.dateStringToCalendarDate(task.end),
-      title: task.title,
-      content: task.description?.substring(0, 25),
-      contentFull: task.description,
-    };
-  });
+  return user_store.tasks
+    .filter((task) => {
+      const start = new Date(task.start);
+      const end = new Date(task.end);
+      const durationInMinutes = (end.getTime() - start.getTime()) / 1000 / 60;
+      console.log(durationInMinutes >= 30 ? task : null);
+      return durationInMinutes >= 30;
+    })
+    .map((task) => {
+      console.log(task);
+      return {
+        start: new Date(task.start),
+        end: new Date(task.end),
+        title: task.title,
+        content: task.description ? task.description.substring(0, 20) : "",
+        contentFull: task.description || "",
+        class: "task-background",
+      };
+    });
 });
 </script>
 
 <template>
   <div class="calendar">
+    <p>{{ $t("calendar.message") }}</p>
     <VueCal
       active-view="day"
       :disable-views="['years', 'year', 'month']"
@@ -43,30 +47,49 @@ const tasks = computed(() => {
 <style lang="scss">
 .calendar {
   display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
   padding: 3.2rem 2.4rem 2.4rem 2.4rem;
+  font-size: 1.6rem;
+  color: var(--primary-white);
   .vuecal {
     border-radius: 0.8rem;
     overflow: hidden;
   }
 }
 
+.task-background {
+  background-color: var(--tint-purple);
+}
+.vuecal__menu,
+.vuecal__cell-events-count {
+  background-color: var(--secondary-color);
+}
 .vuecal__title-bar {
   background-color: var(--tint-green);
+  color: var(--primary-black);
 }
-
-.vuecal__special-hours {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.4rem;
-
-  em {
-    font-size: var(--mobile-p);
-    color: var(--gray-2);
-  }
+.vuecal__cell--today,
+.vuecal__cell--current {
+  background-color: var(--gray-2);
 }
-
-.task-background {
-  background-color: var(--tint-green);
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected {
+  background-color: var(--gray-3);
+}
+.vuecal__cell--selected:before {
+  border-color: rgba(66, 185, 131, 0.5);
+}
+/* Cells and buttons get highlighted when an event is dragged over it. */
+.vuecal__cell--highlighted:not(.vuecal__cell--has-splits),
+.vuecal__cell-split--highlighted {
+  background-color: rgba(195, 255, 225, 0.5);
+}
+.vuecal__arrow.vuecal__arrow--highlighted,
+.vuecal__view-btn.vuecal__view-btn--highlighted {
+  background-color: rgba(136, 236, 191, 0.25);
+}
+.vuecal__no-event,
+.vuecal__weekdays-headings {
+  color: var(--gray-1);
 }
 </style>

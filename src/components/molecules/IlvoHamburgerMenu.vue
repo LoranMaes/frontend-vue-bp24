@@ -29,6 +29,8 @@ const user = auth_store.user;
 
 const handleLogout = async () => {
   await auth_store.logout();
+  document.body.style.overflow = "auto";
+  document.body.ariaExpanded = "false";
   return router.push({ name: "landingPage" });
 };
 </script>
@@ -80,25 +82,25 @@ const handleLogout = async () => {
           <svg>
             <path :d="mdiGroup"></path>
           </svg>
-          {{ $t("menu.all-users") }}
+          {{ $t("menu.admin.all-users") }}
         </RouterLink>
         <RouterLink :to="{ name: 'createUser' }" class="link">
           <svg>
             <path :d="mdiAccountMultiplePlusOutline"></path>
           </svg>
-          {{ $t("menu.create-user") }}
+          {{ $t("menu.admin.create-user") }}
         </RouterLink>
         <RouterLink :to="{ name: 'allCategories' }" class="link">
           <svg>
             <path :d="mdiShapeOutline"></path>
           </svg>
-          {{ $t("menu.all-users") }}
+          {{ $t("menu.admin.all-users") }}
         </RouterLink>
         <RouterLink :to="{ name: 'createCategory' }" class="link">
           <svg>
             <path :d="mdiShapePlusOutline"></path>
           </svg>
-          {{ $t("menu.create-category") }}
+          {{ $t("menu.admin.create-category") }}
         </RouterLink>
       </template>
 

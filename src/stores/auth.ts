@@ -68,6 +68,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const logout = async () => {
+    loading.value = true;
     try {
       const resp = await apiAxios.post("/auth/logout");
       if (resp.status !== 200) return;
@@ -76,6 +77,8 @@ export const useAuthStore = defineStore("auth", () => {
       localStorage.clear();
     } catch (error) {
       throw new Error("Invalid credentials");
+    } finally {
+      loading.value = true;
     }
   };
 

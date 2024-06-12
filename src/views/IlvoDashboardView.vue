@@ -17,10 +17,6 @@ const auth_store = useAuthStore();
 const user_store = useUserStore();
 const timer_store = useTimerStore();
 const user = auth_store.user;
-const cards_loading = ref({
-  tasks: true,
-  statistics: false,
-});
 
 const router = useRouter();
 const createNewTask = () => {
@@ -32,11 +28,6 @@ const limitedTasks = computed(() => {
     return user_store.tasks;
   return user_store.tasks.slice(0, 3);
 });
-
-onMounted(async () => {
-  await user_store.initializeTasks();
-  cards_loading.value.tasks = false;
-});
 </script>
 
 <template>
@@ -44,10 +35,16 @@ onMounted(async () => {
     <h1>{{ $t("dashboard.title", { name: user?.firstName }) }}</h1>
     <IlvoCard :title="$t('dashboard.tasks.title')" router-link="calendar">
       <!-- Add tasks here -->
-      <div class="loading" v-if="cards_loading.tasks">
+      <div class="loading" v-if="user_store.getLoading">
         <span class="loader"></span>
       </div>
-      <p class="empty" v-if="!user_store.tasks || !user_store.tasks.length">
+      <p
+        class="empty"
+        v-if="
+          (!user_store.tasks || !user_store.tasks.length) &&
+          !user_store.getLoading
+        "
+      >
         {{ $t("dashboard.tasks.nothing") }}
       </p>
       <div class="cards" v-else>
@@ -63,10 +60,10 @@ onMounted(async () => {
       router-link="statistics"
     >
       <!-- Add tasks here -->
-      <div class="loading" v-if="cards_loading.statistics">
+      <div class="loading" v-if="user_store.getLoading">
         <span class="loader"></span>
       </div>
-      <p class="empty" v-if="!user_store.statistics">
+      <p class="empty" v-if="!user_store.statistics && !user_store.getLoading">
         {{ $t("dashboard.statistics.nothing") }}
       </p>
     </IlvoCard>

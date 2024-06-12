@@ -64,57 +64,60 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         maximumFileSizeToCacheInBytes: 5000000,
-        runtimeCaching: [
-          {
-            urlPattern: ({ url }) => url.pathname.startsWith("/api"),
-            handler: "CacheFirst" as const,
-            options: {
-              cacheName: "api-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: ({ request }) => request.mode === "navigate",
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "pages-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24,
-              },
-            },
-          },
-          {
-            urlPattern: ({ request }) =>
-              request.destination === "script" ||
-              request.destination === "style",
-            handler: "StaleWhileRevalidate",
-            options: {
-              cacheName: "static-resources-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24,
-              },
-            },
-          },
-          {
-            urlPattern: ({ request }) => request.destination === "image",
-            handler: "CacheFirst",
-            options: {
-              cacheName: "images-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7,
-              },
-            },
-          },
-        ],
+        skipWaiting: true,
+        // runtimeCaching: [
+        //   {
+        //     urlPattern: ({ url }) =>
+        //       url.pathname.startsWith("/api") &&
+        //       !url.pathname.startsWith("/api/auth"),
+        //     handler: "NetworkFirst",
+        //     options: {
+        //       cacheName: "api-cache",
+        //       expiration: {
+        //         maxEntries: 50,
+        //         maxAgeSeconds: 60 * 60 * 24,
+        //       },
+        //       cacheableResponse: {
+        //         statuses: [0, 200],
+        //       },
+        //     },
+        //   },
+        //   {
+        //     urlPattern: ({ request }) => request.mode === "navigate",
+        //     handler: "NetworkFirst",
+        //     options: {
+        //       cacheName: "pages-cache",
+        //       expiration: {
+        //         maxEntries: 50,
+        //         maxAgeSeconds: 60 * 60 * 24,
+        //       },
+        //     },
+        //   },
+        //   {
+        //     urlPattern: ({ request }) =>
+        //       request.destination === "script" ||
+        //       request.destination === "style",
+        //     handler: "StaleWhileRevalidate",
+        //     options: {
+        //       cacheName: "static-resources-cache",
+        //       expiration: {
+        //         maxEntries: 50,
+        //         maxAgeSeconds: 60 * 60 * 24,
+        //       },
+        //     },
+        //   },
+        //   {
+        //     urlPattern: ({ request }) => request.destination === "image",
+        //     handler: "CacheFirst",
+        //     options: {
+        //       cacheName: "images-cache",
+        //       expiration: {
+        //         maxEntries: 50,
+        //         maxAgeSeconds: 60 * 60 * 24 * 7,
+        //       },
+        //     },
+        //   },
+        // ],
         navigateFallback: "index.html",
       },
 
