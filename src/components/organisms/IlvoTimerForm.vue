@@ -1,44 +1,66 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import { buttonStyleValues, buttonTypes } from "../../models/property.enum";
 import { useTimerStore } from "../../stores/timer";
 import IlvoButton from "../atoms/IlvoButton.vue";
 import { useUserStore } from "../../stores/user";
 import { useRouter } from "vue-router";
+import IlvoInputField from "../molecules/IlvoInputField.vue";
 
 const timer_store = useTimerStore();
 const user_store = useUserStore();
 
-const category_title = computed(() => {
+const local_category_id = computed(() => {
   if (timer_store.localCategory?.sub_cat_id) {
-    if (user_store.categories) {
-      console.log(timer_store.localCategory?.sub_cat_id);
-      return user_store.categories.find((category) => {
-        if (category.sub_categories) {
-          return category.sub_categories.find((sub_category) => {
-            return sub_category.id === timer_store.localCategory?.sub_cat_id;
-          })?.title;
-        }
-      })?.title;
-    }
-    return "No category selected";
+    if (!user_store.categories) return "No category selected";
+
+    let sub_cat_id = "";
+    user_store.categories.forEach((category) => {
+      if (category.sub_categories) {
+        category.sub_categories.forEach((sub_category) =>
+          sub_category.id === timer_store.localCategory?.sub_cat_id
+            ? (sub_cat_id = sub_category.id)
+            : null
+        );
+      }
+    });
+    return sub_cat_id ? sub_cat_id : "No category selected";
   }
 
   return user_store.categories
     ? user_store.categories.find((category) => {
         return category.id === timer_store.localCategory?.id;
-      })?.title
+      })?.id
     : "No category selected";
+});
+
+const select_titles = computed(() => {
+  if (!user_store.categories) return [];
+
+  return user_store.categories.flatMap((category) => {
+    const subCategories = category.sub_categories.map((sub_category) => {
+      return {
+        title: sub_category.title,
+        main_title: category.title,
+        id: category.id,
+        sub_cat_id: sub_category.id,
+      };
+    });
+
+    return [{ title: category.title, id: category.id }, ...subCategories];
+  });
 });
 
 const timerForm = ref<{
   title: string;
   description: string;
   color: string;
+  category: number;
 }>({
   title: "",
   description: "",
   color: "",
+  category: 0,
 });
 
 const error_form = ref<string>("");
@@ -72,7 +94,7 @@ const handleForm = async (data: Event) => {
     timerForm.value.description.length > 100
   ) {
     error_form.value =
-      "Please enter a description with between 3 and 100 characters"; 
+      "Please enter a description with between 3 and 100 characters";
     return;
   }
 
@@ -84,7 +106,7 @@ const handleForm = async (data: Event) => {
   formData.set("end", timer_store.endTime.toISOString().slice(0, -5) + "Z");
   try {
     const resp = await timer_store.sendTimer(formData);
-    
+
     if (!resp) return;
     return router.push({ name: "dashboard" });
   } catch (error: any) {
@@ -133,6 +155,7 @@ const handleForm = async (data: Event) => {
   </div>
 
   <form action="#" method="post" autocomplete="on" @submit.prevent="handleForm">
+    <!-- Hidden inputs for extra information -->
     <input
       type="hidden"
       name="start"
@@ -150,43 +173,44 @@ const handleForm = async (data: Event) => {
       :value="timer_store.localCategory?.sub_cat_id"
     />
 
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title" v-model="timerForm.title" />
-
-    <label for="title">Description</label>
-    <textarea
-      name="description"
-      id="description"
-      v-model="timerForm.description"
-    ></textarea>
-
-    <p>
-      {{ `Choosing a category in development ${category_title}` }}
-    </p>
-
-    <label for="color">Color</label>
-    <input type="color" name="color" id="color" />
-    <!-- <IlvoInputField
+    <IlvoInputField
       type="text"
       id="title"
       :placeholder="$t('timer.input.form.placeholderTitle')"
       :label="$t('timer.input.form.title')"
-      v-model:input="timerForm?.title"
+      v-model:input="timerForm.title"
     />
+
     <IlvoInputField
       type="textarea"
       id="description"
-      :placeholder="$t('timer.input.form.descriptionTitle')"
+      :placeholder="$t('timer.input.form.descriptionPlaceholder')"
       :label="$t('timer.input.form.description')"
-      v-model:input="timerForm?.title"
+      v-model:input="timerForm.description"
     />
+
+    <IlvoInputField
+      type="select"
+      id="categories"
+      :placeholder="$t('timer.input.form.categoryPlaceholder')"
+      :label="$t('timer.input.form.category')"
+      v-model:input="timerForm.category"
+      :selected="select_titles.findIndex((title: any) => 
+        title?.sub_cat_id
+          ? title.sub_cat_id === local_category_id
+          : title.id === local_category_id
+      )"
+      :values="select_titles.map((title: any) => title?.sub_cat_id ? title.title + ' - ' + title.main_title : title.title)"
+    />
+
     <IlvoInputField
       type="color"
       id="color"
-      :placeholder="$t('timer.input.form.descriptionTitle')"
+      :placeholder="$t('timer.input.form.colorPlaceholder')"
       :label="$t('timer.input.form.color')"
-      v-model:input="timerForm?.title"
-    /> -->
+      v-model:input="timerForm.color"
+    />
+
     <p v-if="error_form">{{ error_form }}</p>
 
     <IlvoButton

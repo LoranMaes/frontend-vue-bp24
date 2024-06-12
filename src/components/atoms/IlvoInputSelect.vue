@@ -1,5 +1,36 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+  id: string;
+  values: Array<string>;
+  placeholder: string;
+  disabled?: boolean;
+  readonly?: boolean;
+  error?: boolean;
+  selected?: number;
+}>();
+const model = defineModel("input", { required: true });
+model.value = props.selected;
+</script>
 
-<template></template>
+<template>
+  <select
+    :name="id"
+    :id
+    v-model="model"
+    :disabled
+    :readonly
+    :class="[error ? 'error' : '']"
+    :placeholder="placeholder"
+  >
+    <option
+      v-for="(value, index) in values"
+      :key="index"
+      :value="index"
+      :selected="selected === index"
+    >
+      {{ value }}
+    </option>
+  </select>
+</template>
 
 <style scoped lang="scss"></style>

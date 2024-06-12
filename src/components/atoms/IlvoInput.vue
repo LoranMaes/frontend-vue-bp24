@@ -2,9 +2,18 @@
 import { computed, ref } from "vue";
 import { isValidMdiIcon } from "../../composables/validators";
 import * as mdiIcons from "@mdi/js";
+import IlvoInputSelect from "./IlvoInputSelect.vue";
 
 const props = defineProps<{
-  type: "text" | "password" | "email" | "file" | "date" | "color" | "textarea";
+  type:
+    | "text"
+    | "password"
+    | "email"
+    | "file"
+    | "date"
+    | "color"
+    | "textarea"
+    | "select";
   placeholder: string;
   id: string;
   mdiIcon?: string;
@@ -12,6 +21,8 @@ const props = defineProps<{
   disabled?: boolean;
   readonly?: boolean;
   error?: boolean;
+  values?: Array<string>;
+  selected?: number;
 }>();
 const model = defineModel("input", { required: true });
 
@@ -35,6 +46,17 @@ const showPassword = ref(false);
     v-model="model"
     :name="id"
   ></textarea>
+  <IlvoInputSelect
+    v-else-if="type === 'select'"
+    :id
+    :disabled
+    :readonly
+    :error
+    :selected
+    :values="values || []"
+    :placeholder="placeholder"
+    v-model:input="model"
+  />
   <div
     v-else
     :class="['input-field', { 'icon-left': iconSide === 'left' && iconPath }]"
@@ -89,6 +111,8 @@ const showPassword = ref(false);
 <style scoped lang="scss">
 input,
 textarea {
+  position: relative;
+  font-family: "Raleway", sans-serif;
   border: 1px solid var(--gray-3);
   border-radius: 0.8rem;
   box-shadow: var(--shadow-sm);
@@ -96,6 +120,13 @@ textarea {
   font-size: 1.6rem;
   &.error {
     border-color: var(--state-error);
+  }
+  &[type="color"] {
+    padding: 0;
+    border: none;
+    width: 100%;
+    height: 5.4rem;
+    cursor: pointer;
   }
 }
 .input-field {

@@ -94,6 +94,9 @@
         "description": "Description",
         "descriptionPlaceholder": "Describe your task",
         "color": "Choose a color",
+        "colorPlaceholder": "Choose a color",
+        "category": "Choose a category",
+        "categoryPlaceholder": "Choose a category",
         "submit": "Save your task"
       }
     }
