@@ -44,6 +44,7 @@ a {
   background-color: var(--state-error);
   box-shadow: 0 -4px 8px 0 rgba(244, 67, 54, 0.5);
   box-sizing: border-box;
+  border-radius: 1.6rem 1.6rem 0 0;
   h2,
   p {
     color: var(--primary-white);
@@ -53,6 +54,7 @@ a {
     display: flex;
     flex-direction: row;
     gap: 0.8rem;
+    align-items: center;
     + svg {
       position: absolute;
       right: 1.6rem;

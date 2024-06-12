@@ -16,11 +16,11 @@ const tasks = computed(() => {
       const start = new Date(task.start);
       const end = new Date(task.end);
       const durationInMinutes = (end.getTime() - start.getTime()) / 1000 / 60;
-      console.log(durationInMinutes >= 30 ? task : null);
+      // console.log(durationInMinutes >= 30 ? task : null);
       return durationInMinutes >= 30;
     })
     .map((task) => {
-      console.log(task);
+      // console.log(task);
       return {
         start: new Date(task.start),
         end: new Date(task.end),

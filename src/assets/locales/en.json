@@ -66,7 +66,8 @@
     },
     "statistics": {
       "title": "📊 Statistics",
-      "nothing": "No statistics yet"
+      "nothing": "No statistics yet",
+      "week": "These are your statistics for the past 7 days"
     }
   },
   "timer": {

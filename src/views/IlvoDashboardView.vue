@@ -12,6 +12,7 @@ import {
 } from "../models/property.enum";
 import { useRouter } from "vue-router";
 import { useTimerStore } from "../stores/timer";
+import IlvoDashboardStatistic from "../components/atoms/IlvoDashboardStatistic.vue";
 
 const auth_store = useAuthStore();
 const user_store = useUserStore();
@@ -69,13 +70,19 @@ onMounted(() => {
       :title="$t('dashboard.statistics.title')"
       router-link="statistics"
     >
-      <!-- Add tasks here -->
       <div class="loading" v-if="user_store.getLoading">
         <span class="loader"></span>
       </div>
-      <p class="empty" v-if="!user_store.statistics && !user_store.getLoading">
+      <p
+        class="empty"
+        v-if="
+          (!user_store.tasks || !user_store.tasks.length) &&
+          !user_store.getLoading
+        "
+      >
         {{ $t("dashboard.statistics.nothing") }}
       </p>
+      <IlvoDashboardStatistic v-else />
     </IlvoCard>
 
     <IlvoButton
