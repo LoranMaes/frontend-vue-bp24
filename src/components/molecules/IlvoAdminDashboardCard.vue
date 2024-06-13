@@ -8,6 +8,7 @@ import {
   buttonTypes,
   linkTypes,
 } from "../../models/property.enum";
+import IlvoButton from "../atoms/IlvoButton.vue";
 
 defineProps<{
   card_type: "user" | "category";
@@ -96,6 +97,12 @@ const getLengthForRole = (role: string) => {
       :style="buttonStyleValues.PRIMARY"
       class="full-width center"
       >{{ $t("dashboard.admin.users.newUser") }}</IlvoRouterLink
+    >
+    <IlvoButton
+      :type="buttonTypes.TEXT"
+      :style="buttonStyleValues.SECONDARY"
+      @button-clicked="async () => admin_store.downloadUsersAsCSV()"
+      >{{ $t("dashboard.admin.users.download") }}</IlvoButton
     >
   </template>
   <template v-if="card_type === 'category'">

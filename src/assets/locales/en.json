@@ -80,7 +80,8 @@
         "default": "Users: <span class='warning'>{users}</span>",
         "admin": "Admins: <span class='warning'>{admins}</span>",
         "today": "New users today: <span class='warning'>{today}</span>",
-        "newUser": "Create new user"
+        "newUser": "Create new user",
+        "download": "Download all users"
       },
       "categories": {
         "title": "📂 All categories",

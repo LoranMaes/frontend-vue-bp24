@@ -103,7 +103,20 @@ onMounted(async () => {
       <IlvoCard
         :title="$t('dashboard.admin.statistics.title')"
         router-link="statistics"
-      ></IlvoCard>
+      >
+        <IlvoLoader v-if="admin_store.getLoading" />
+
+        <p
+          class="empty"
+          v-if="
+            (!admin_store.tasks || !admin_store.tasks.length) &&
+            !admin_store.getLoading
+          "
+        >
+          {{ $t("dashboard.statistics.nothing") }}
+        </p>
+        <IlvoDashboardStatistic role="admin" v-else />
+      </IlvoCard>
     </template>
     <template v-else>
       <IlvoCard :title="$t('dashboard.tasks.title')" router-link="calendar">
@@ -142,7 +155,7 @@ onMounted(async () => {
         >
           {{ $t("dashboard.statistics.nothing") }}
         </p>
-        <IlvoDashboardStatistic v-else />
+        <IlvoDashboardStatistic role="user" v-else />
       </IlvoCard>
 
       <IlvoButton

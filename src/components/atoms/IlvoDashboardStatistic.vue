@@ -11,7 +11,12 @@ import {
 } from "chart.js";
 import { useUserStore } from "../../stores/user";
 import { Line } from "vue-chartjs";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
+import { useAdminStore } from "../../stores/admin";
+
+const props = defineProps<{
+  role: "user" | "admin";
+}>();
 
 ChartJS.register(
   CategoryScale,
@@ -24,6 +29,7 @@ ChartJS.register(
 );
 
 const user_store = useUserStore();
+const admin_store = useAdminStore();
 
 const labels = Array.from({ length: 7 }, (_, i) => {
   const d = new Date();
@@ -39,9 +45,18 @@ const taskCounts = computed(() => {
   const counts: number[] = Array(7).fill(0);
   const today = normalizeDate(new Date());
 
-  if (!user_store.tasks) return counts;
-
-  user_store.tasks.forEach((task) => {
+  let count_days_array: any = [];
+  switch (props.role) {
+    case "admin":
+      if (!admin_store.tasks) return counts;
+      count_days_array = admin_store.tasks;
+      break;
+    case "user":
+      if (!user_store.tasks) return counts;
+      count_days_array = user_store.tasks;
+      break;
+  }
+  count_days_array.forEach((task: any) => {
     const end = normalizeDate(new Date(task.end));
     const daysAgo = Math.floor(
       (today.getTime() - end.getTime()) / (1000 * 60 * 60 * 24)

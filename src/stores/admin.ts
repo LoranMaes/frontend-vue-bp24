@@ -41,11 +41,39 @@ export const useAdminStore = defineStore("admin", () => {
     }
   };
 
+  const downloadUsersAsCSV = async () => {
+    await initializeUsers();
+    if (!allUsers.value) return;
+    // Convert users data to CSV format
+    const replacer = (key, value) => (value === null ? "" : value);
+    const header = Object.keys(allUsers.value[0]);
+    let csvArray = allUsers.value.map((row) =>
+      header
+        .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+        .join(",")
+    );
+    csvArray.unshift(header.join(","));
+    let csvString = csvArray.join("\r\n");
+
+    // Create a Blob from the CSV data
+    const blob = new Blob([csvString], { type: "text/csv" });
+
+    // Create a link element and trigger a click event on it
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "users.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return {
     getLoading,
     initializeUsers,
     initializeTasks,
     tasks,
     allUsers,
+    downloadUsersAsCSV,
   };
 });
