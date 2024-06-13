@@ -106,6 +106,49 @@ export const useAdminStore = defineStore("admin", () => {
     }
   };
 
+  const addCategory = async (category: string) => {
+    try {
+      loading.value = true;
+      const formData = new FormData();
+      formData.append("title", category);
+      const resp = await apiAxios.post("/admin/categories", formData);
+      if (resp.status !== 200) return;
+      return true;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw new Error("Failed to create category");
+    } finally {
+      loading.value = false;
+    }
+  };
+  const addSubCategory = async (sub_category: string, category_id: string) => {
+    try {
+      loading.value = true;
+      const formData = new FormData();
+      formData.append("title", sub_category);
+      formData.append("categoryId", category_id);
+      const resp = await apiAxios.post("/admin/sub-categories", formData);
+      if (resp.status !== 200) return;
+      return true;
+    } catch (error) {
+      console.error("Error creating category:", error);
+      throw new Error("Failed to create category");
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const createCategory = async (category: string) => {
+    return await addCategory(category);
+  };
+
+  const createSubCategory = async (
+    sub_category: string,
+    category_id: string
+  ) => {
+    return await addSubCategory(sub_category, category_id);
+  };
+
   return {
     getLoading,
     initializeUsers,
@@ -115,5 +158,7 @@ export const useAdminStore = defineStore("admin", () => {
     downloadUsersAsCSV,
     deleteUser,
     createUser,
+    createCategory,
+    createSubCategory,
   };
 });
