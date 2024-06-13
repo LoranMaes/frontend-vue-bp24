@@ -6,12 +6,28 @@ import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { useUserStore } from "../stores/user";
 import { computed } from "vue";
+import { useAuthStore } from "../stores/auth";
+import { useAdminStore } from "../stores/admin";
+import { Task } from "../models/task.model";
 
 const user_store = useUserStore();
+const auth_store = useAuthStore();
+const admin_store = useAdminStore();
 
 const tasks = computed(() => {
-  if (!user_store.tasks) return [];
-  return user_store.tasks
+  const task_array: Task[] = [];
+  switch (auth_store.user?.role) {
+    case "user":
+      if (!user_store.tasks) return [];
+      task_array.push(...user_store.tasks);
+      break;
+    case "admin":
+      if (!admin_store.tasks) return [];
+      task_array.push(...admin_store.tasks);
+      break;
+  }
+
+  return task_array
     .filter((task) => {
       const start = new Date(task.start);
       const end = new Date(task.end);
