@@ -94,7 +94,7 @@ const handleLogout = async () => {
           <svg>
             <path :d="mdiShapeOutline"></path>
           </svg>
-          {{ $t("menu.admin.all-users") }}
+          {{ $t("menu.admin.all-categories") }}
         </RouterLink>
         <RouterLink :to="{ name: 'createCategory' }" class="link">
           <svg>

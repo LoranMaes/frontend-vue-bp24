@@ -11,7 +11,8 @@ defineProps<{
     | "date"
     | "color"
     | "textarea"
-    | "select";
+    | "select"
+    | "file";
   id: string;
   placeholder: string;
   label: string;
@@ -24,6 +25,7 @@ defineProps<{
   errorHelper?: string;
   values?: Array<string>;
   selected?: number;
+  accept?: string;
 }>();
 const model = defineModel("input", { required: true });
 </script>
@@ -43,6 +45,8 @@ const model = defineModel("input", { required: true });
       v-model:input="model"
       :error="error"
       :values="values"
+      :accept="accept"
+      :on-update:input="($event) => $emit('update:input', $event)"
     />
     <p class="small" v-if="helper && !error">{{ helper }}</p>
     <p class="small error" v-if="error">{{ errorHelper }}</p>

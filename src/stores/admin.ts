@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { User } from "../models/user.model";
+import { User, UserCreation } from "../models/user.model";
 import { apiAxios } from "../axios/apiAxios";
 import { Task } from "../models/task.model";
 
@@ -68,6 +68,44 @@ export const useAdminStore = defineStore("admin", () => {
     document.body.removeChild(link);
   };
 
+  const deleteUser = async (id: string) => {
+    try {
+      loading.value = true;
+      const resp = await apiAxios.delete(`/admin/users/${id}`);
+      if (resp.status !== 200) return;
+      return await initializeUsers();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      throw new Error("Failed to delete user");
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const createUser = async (user: UserCreation) => {
+    try {
+      loading.value = true;
+      const formData = new FormData();
+      formData.append("firstName", user.firstName);
+      formData.append("lastName", user.lastName);
+      formData.append("email", user.email);
+      formData.append("password", user.password);
+      if (user.profilePicture) {
+        formData.append("profilePicture", user.profilePicture);
+      }
+
+      const resp = await apiAxios.post("/admin/users", formData);
+      if (resp.status !== 200) return;
+      await initializeUsers();
+      return true;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw new Error("Failed to create user");
+    } finally {
+      loading.value = false;
+    }
+  };
+
   return {
     getLoading,
     initializeUsers,
@@ -75,5 +113,7 @@ export const useAdminStore = defineStore("admin", () => {
     tasks,
     allUsers,
     downloadUsersAsCSV,
+    deleteUser,
+    createUser,
   };
 });

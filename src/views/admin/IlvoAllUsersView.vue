@@ -4,7 +4,6 @@ import IlvoInputField from "../../components/molecules/IlvoInputField.vue";
 import { useAdminStore } from "../../stores/admin";
 import IlvoAdminUserCard from "../../components/molecules/IlvoAdminUserCard.vue";
 import { useAuthStore } from "../../stores/auth";
-import IlvoInputSelect from "../../components/atoms/IlvoInputSelect.vue";
 
 const filter_options = [
   "most_recent",

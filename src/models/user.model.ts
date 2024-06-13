@@ -14,8 +14,9 @@ export interface UserCreation {
   firstName: string;
   lastName: string;
   email: string;
-  profilePicture?: File;
+  profilePicture?: Blob;
   password: string;
+  role?: "admin" | "user";
 }
 
 export interface UserCreationPart2 {

@@ -1,4 +1,6 @@
 {
+  "yes": "Yes",
+  "no": "No",
   "development": "This feature is still in development 🛠️",
   "navigation": {
     "seeAll": "See all"
@@ -42,7 +44,10 @@
       "registerButton": "Register",
       "emailError": "This is not a valid email address",
       "passwordError": "Your password must be between 8 and 30 characters long",
-      "repeatPasswordError": "Your password don't match"
+      "repeatPasswordError": "Your password don't match",
+      "profilePicture": "Profile picture",
+      "profilePicturePlaceholder": "Choose a profile picture",
+      "profilePictureError": "Profile picture must be an image and smaller than 2MB, current size: {size}"
     },
     "registerCompletion": {
       "title": "Welcome!",
@@ -90,6 +95,7 @@
         "roleUserCard": "Role",
         "noUsers": "😓 No users found",
         "createdAt": "Created at: {date}",
+        "deleteSure": "Are you sure you want to delete this user?",
         "filterOptions": {
           "most_recent": "Most recent",
           "oldest": "Oldest",

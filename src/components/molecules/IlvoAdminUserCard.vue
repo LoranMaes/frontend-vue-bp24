@@ -1,27 +1,33 @@
 <script setup lang="ts">
 import { mdiTrashCanOutline } from "@mdi/js";
 import IlvoInputField from "./IlvoInputField.vue";
+import { useAdminStore } from "../../stores/admin";
 
-defineProps<{
+const props = defineProps<{
   user: any;
   disabled?: boolean;
 }>();
+
+const admin_store = useAdminStore();
+const handleUserDelete = async () => {
+  await admin_store.deleteUser(props.user.id);
+};
 </script>
 <template>
-  <div class="user-card">
+  <div class="user-card" ref="dialog">
     <div class="top">
       <div class="left">
         <p class="bold">{{ user.firstName }} {{ user.lastName }}</p>
         <p class="small">{{ user.email }}</p>
       </div>
-      <button>
+      <button @click="handleUserDelete" v-if="!disabled">
         <svg viewBox="0 0 24 24" height="20" fill="#FAFAFA">
           <path :d="mdiTrashCanOutline"></path>
         </svg>
       </button>
     </div>
     <div class="bottom">
-      <form action="#">
+      <!-- <form action="#">
         <IlvoInputField
           type="select"
           :id="`role-user-${user.id}`"
@@ -32,7 +38,7 @@ defineProps<{
           placeholder="Select a role"
           :disabled
         />
-      </form>
+      </form> -->
       <p
         class="bold"
         v-html="

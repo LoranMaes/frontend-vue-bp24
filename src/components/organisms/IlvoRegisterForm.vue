@@ -80,7 +80,7 @@ const register = async () => {
     return;
   }
 
-  //TODO: Put it in local storage for different form
+  // TODO: Put it in local storage for different form
   try {
     await authStore.register(register_form.value);
     return router.push({ name: "dashboard" });

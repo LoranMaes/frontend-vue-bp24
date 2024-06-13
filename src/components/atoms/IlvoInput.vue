@@ -14,7 +14,8 @@ const props = defineProps<{
     | "date"
     | "color"
     | "textarea"
-    | "select";
+    | "select"
+    | "file";
   placeholder: string;
   id: string;
   mdiIcon?: string;
@@ -24,6 +25,7 @@ const props = defineProps<{
   error?: boolean;
   values?: Array<string>;
   selected?: number;
+  accept?: string;
 }>();
 const model = defineModel("input", { required: true });
 
