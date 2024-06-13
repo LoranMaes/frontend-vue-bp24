@@ -20,3 +20,13 @@ export async function useAuthGuardNotLoggedIn(to: RouteLocation) {
   }
   return;
 }
+
+export async function useAuthGuardAdmin(to: RouteLocation) {
+  to.fullPath;
+  const authStore = useAuthStore();
+  await authStore.initUser();
+  if (!authStore.isAuthenticated || authStore.user?.role !== "admin") {
+    return { name: "landingPage" };
+  }
+  return;
+}

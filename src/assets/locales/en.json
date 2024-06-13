@@ -67,7 +67,33 @@
     "statistics": {
       "title": "📊 Statistics",
       "nothing": "No statistics yet",
-      "week": "These are your statistics for the past 7 days"
+      "week": "These are all your tasks each day for the past 7 days"
+    },
+    "admin": {
+      "banner": "⚒️ ADMIN",
+      "tasks": {
+        "title": "👨🏻‍🌾 Recently uploaded tasks"
+      },
+      "users": {
+        "title": "👥 All users",
+        "current": "Currently at: <span class='warning'>{current}</span>",
+        "default": "Users: <span class='warning'>{users}</span>",
+        "admin": "Admins: <span class='warning'>{admins}</span>",
+        "today": "New users today: <span class='warning'>{today}</span>",
+        "newUser": "Create new user"
+      },
+      "categories": {
+        "title": "📂 All categories",
+        "total": "Total categories: <span class='warning'>{total}</span>",
+        "main": "Main categories: <span class='warning'>{main}</span>",
+        "sub": "Subcategories: <span class='warning'>{sub}</span>",
+        "newCategory": "Create new category"
+      },
+      "statistics": {
+        "title": "📊 Statistics",
+        "nothing": "No statistics yet",
+        "week": "These are the tasks of all users each day for the past 7 days"
+      }
     }
   },
   "timer": {

@@ -5,10 +5,12 @@ import { onMounted } from "vue";
 import { useAuthStore } from "./stores/auth";
 import { useTimerStore } from "./stores/timer";
 import { useUserStore } from "./stores/user";
+import { useAdminStore } from "./stores/admin";
 
 const auth_store = useAuthStore();
 const timer_store = useTimerStore();
 const user_store = useUserStore();
+const admin_store = useAdminStore();
 
 // Don't know if this is the best way but I'm populating the user data when the application first loads
 onMounted(async () => {
@@ -17,7 +19,15 @@ onMounted(async () => {
     await auth_store.initUser();
     if (auth_store.isAuthenticated) {
       await user_store.initializeCategories();
-      await user_store.initializeTasks();
+      switch (auth_store.user?.role) {
+        case "user":
+          await user_store.initializeTasks();
+          break;
+        case "admin":
+          await admin_store.initializeUsers();
+          await admin_store.initializeTasks();
+          break;
+      }
     }
   } catch (error) {
     console.error(error);

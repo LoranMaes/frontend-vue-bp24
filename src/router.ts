@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import {
+  useAuthGuardAdmin,
   useAuthGuardLoggedIn,
   useAuthGuardNotLoggedIn,
 } from "./composables/authGuard";
@@ -64,6 +65,7 @@ const routes = [
       },
       {
         path: "admin",
+        beforeEnter: useAuthGuardAdmin,
         children: [
           {
             path: "all-users",

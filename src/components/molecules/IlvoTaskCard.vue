@@ -6,6 +6,7 @@ import { Helpers } from "../../composables/helpers";
 
 const props = defineProps<{
   task: Task;
+  name: string | undefined;
 }>();
 
 const user_store = useUserStore();
@@ -16,11 +17,12 @@ const cat_title = computed(() => {
 });
 
 const sub_cat_title = computed(() => {
-  user_store.categories?.forEach((cat) => {
-    return cat.sub_categories?.find(
-      (sub_cat) => sub_cat.id === props.task.subCategoryId
-    )?.title;
-  });
+  const i = user_store.categories?.findIndex(
+    (cat) => cat.id === props.task.categoryId
+  );
+  return user_store.categories?.[i!].sub_categories?.find(
+    (sub_cat) => sub_cat.id === props.task.subCategoryId
+  )?.title;
 });
 </script>
 
@@ -48,10 +50,12 @@ const sub_cat_title = computed(() => {
         </p>
       </div>
     </div>
+    <p class="small bold" v-if="name">{{ name }}</p>
     <div class="categories">
       <p class="small bold">
         {{ cat_title }}
       </p>
+      <span class="circle" v-if="task.subCategoryId"></span>
       <p class="small bold" v-if="task.subCategoryId">
         {{ sub_cat_title }}
       </p>
@@ -69,9 +73,15 @@ const sub_cat_title = computed(() => {
   border-radius: 0.8rem;
   &.dark * {
     color: var(--primary-white) !important;
+    span.circle {
+      background-color: var(--primary-white) !important;
+    }
   }
   &.light * {
     color: var(--primary-dark) !important;
+    span.circle {
+      background-color: var(--primary-white) !important;
+    }
   }
   .card-header {
     display: flex;
@@ -81,6 +91,13 @@ const sub_cat_title = computed(() => {
   .categories {
     display: flex;
     gap: 0.8rem;
+    align-items: center;
+    span.circle {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background-color: var(--primary-black);
+    }
     p {
       &:last-child {
         position: relative;
