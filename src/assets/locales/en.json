@@ -83,6 +83,21 @@
         "newUser": "Create new user",
         "download": "Download all users"
       },
+      "allUsers": {
+        "search": "Search by name",
+        "searchPlaceholder": "Jan Janssens",
+        "filter": "Filter on",
+        "roleUserCard": "Role",
+        "noUsers": "😓 No users found",
+        "createdAt": "Created at: {date}",
+        "filterOptions": {
+          "most_recent": "Most recent",
+          "oldest": "Oldest",
+          "alphabetical": "Alphabetical (A-Z)",
+          "reverse_alphabetical": "Alphabetical (Z-A)",
+          "role": "Role"
+        }
+      },
       "categories": {
         "title": "📂 All categories",
         "total": "Total categories: <span class='warning'>{total}</span>",

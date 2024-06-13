@@ -54,6 +54,7 @@ const model = defineModel("input", { required: true });
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
   p {
     margin: 0;
     &.error {

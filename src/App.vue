@@ -44,6 +44,12 @@ onMounted(async () => {
       <span class="loader"></span>
     </div>
     <template v-else>
+      <div
+        id="admin_banner"
+        v-if="auth_store.isAuthenticated && auth_store.user?.role === 'admin'"
+      >
+        <p class="bold">{{ $t("dashboard.admin.banner") }}</p>
+      </div>
       <RouterView name="default" />
       <RouterView name="modal" />
     </template>

@@ -63,9 +63,6 @@ onMounted(async () => {
     <h1>{{ $t("dashboard.title", { name: user?.firstName }) }}</h1>
 
     <template v-if="auth_store.user?.role === 'admin'">
-      <div id="admin_banner">
-        <p class="bold">{{ $t("dashboard.admin.banner") }}</p>
-      </div>
       <IlvoCard
         :title="$t('dashboard.admin.tasks.title')"
         router-link="calendar"
@@ -195,21 +192,6 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
-  }
-
-  #admin_banner {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gradient-green);
-    border-radius: 999px;
-    padding: 0.8rem 1.6rem;
-    box-sizing: border-box;
-    box-shadow: 0 0 1.6rem 0 #1b9971;
-    p {
-      color: var(--primary-white);
-    }
   }
 }
 </style>

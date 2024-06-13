@@ -167,6 +167,22 @@ span.warning {
   color: var(--state-warning);
 }
 
+#admin_banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-green);
+  border-radius: 999px;
+  padding: 0.8rem 1.6rem;
+  box-sizing: border-box;
+  box-shadow: 0 0 1.6rem 0 #1b9971;
+  margin: 2.4rem;
+  margin-bottom: 0;
+  p {
+    color: var(--primary-white);
+  }
+}
+
 #loading,
 .loading {
   display: flex;

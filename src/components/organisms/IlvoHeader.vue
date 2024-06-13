@@ -62,7 +62,11 @@ watch(hamburgerOpen, () => {
       }}
     </h1>
     <h1 v-else>
-      {{ $t(`menu.${route.path.substring(1, route.path.length)}`) }}
+      {{
+        $t(
+          `menu.${route.path.substring(1, route.path.length).replace("/", ".")}`
+        )
+      }}
     </h1>
     <IlvoButton
       :style="buttonStyleValues.PRIMARY"

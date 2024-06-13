@@ -46,5 +46,8 @@ select {
   &.error {
     border-color: var(--state-error);
   }
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 </style>
