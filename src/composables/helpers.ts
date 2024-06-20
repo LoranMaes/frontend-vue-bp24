@@ -1,3 +1,7 @@
+import { useAuthStore } from "../stores/auth";
+
+const auth_store = useAuthStore();
+
 export namespace Helpers {
   export function capitalize(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
@@ -30,5 +34,33 @@ export namespace Helpers {
     return `${new Date(date).toISOString().split("T")[0]} ${
       new Date(date).toISOString().split("T")[1].split(".")[0]
     }`;
+  }
+
+  export function timeToHours(date: Date): string {
+    return `${new Date(date).getHours().toString().padStart(2, "0")}:${new Date(
+      date
+    )
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  export function timeToDateString(date: Date): string {
+    return `${new Date(date).toLocaleDateString("nl")}`;
+  }
+
+  export function statsLabelsPastWeek(): string[] {
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      return d.toLocaleDateString(
+        auth_store.user?.language ? auth_store.user.language : "en",
+        { weekday: "long" }
+      );
+    }).reverse();
+  }
+
+  export function normalizeDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 }

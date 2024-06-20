@@ -22,7 +22,7 @@ const handleCategorySelected = (category: {
 <template>
   <template v-if="type === 'top'">
     <!-- Top categories -->
-    <p v-if="!user_store.categories?.length">
+    <p v-if="!user_store.topCategories?.length">
       {{ $t("timer.first_step.no_categories") }}
     </p>
     <div v-else class="categories">

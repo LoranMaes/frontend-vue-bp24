@@ -41,13 +41,10 @@ const sub_cat_title = computed(() => {
       <p class="bold">{{ task.title }}</p>
       <div class="times">
         <p>
-          {{ new Date(task.start).getHours().toString().padStart(2, "0") }}:{{
-            new Date(task.start).getMinutes().toString().padStart(2, "0")
-          }}
-          - {{ new Date(task.end).getHours().toString().padStart(2, "0") }}:{{
-            new Date(task.end).getMinutes().toString().padStart(2, "0")
-          }}
+          {{ Helpers.timeToHours(task.start) }} -
+          {{ Helpers.timeToHours(task.end) }}
         </p>
+        <p class="small bold">{{ Helpers.timeToDateString(task.end) }}</p>
       </div>
     </div>
     <p class="small bold" v-if="name">{{ name }}</p>
@@ -87,6 +84,12 @@ const sub_cat_title = computed(() => {
     display: flex;
     justify-content: space-between;
     gap: 0.8rem;
+    .times {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
   }
   .categories {
     display: flex;

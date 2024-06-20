@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from "vue";
 import { buttonStyleValues, buttonTypes } from "../../models/property.enum";
 import { useTimerStore } from "../../stores/timer";
 import IlvoButton from "../atoms/IlvoButton.vue";
@@ -59,7 +59,7 @@ const timerForm = ref<{
 }>({
   title: "",
   description: "",
-  color: "",
+  color: "#a285d0",
   category: -1,
 });
 
@@ -87,6 +87,11 @@ const isValidForm = computed(() => {
 });
 
 const handleForm = async (data: Event) => {
+  if (!window.navigator.onLine) {
+    error_form.value = "You are offline, please connect to the internet";
+    return;
+  }
+
   // Double validation for right error codes
   if (!timer_store.startTime || !timer_store.endTime) {
     error_form.value = "Please select a start and end time";
@@ -123,6 +128,20 @@ const handleForm = async (data: Event) => {
     error_form.value = error?.message;
   }
 };
+
+// TODO Check if online realtime
+// const isOnline = ref(window.navigator.onLine);
+// const updateOnlineStatus = (e: any) => {
+//   console.log(e);
+// };
+// onMounted(() => {
+//   window.addEventListener("offline", updateOnlineStatus);
+//   window.addEventListener("online", updateOnlineStatus);
+// });
+// onUnmounted(() => {
+//   window.removeEventListener("offline", updateOnlineStatus);
+//   window.removeEventListener("online", updateOnlineStatus);
+// });
 </script>
 
 <template>
@@ -194,6 +213,7 @@ const handleForm = async (data: Event) => {
           : false
       "
       :error-helper="$t('timer.input.form.titleError')"
+      :required="true"
     />
 
     <IlvoInputField
@@ -209,6 +229,7 @@ const handleForm = async (data: Event) => {
           : false
       "
       :error-helper="$t('timer.input.form.descriptionError')"
+      :required="true"
     />
 
     <IlvoInputField
@@ -219,10 +240,11 @@ const handleForm = async (data: Event) => {
       v-model:input="timerForm.category"
       :selected="select_titles.findIndex((title: any) => 
         title?.sub_cat_id
-          ? title.sub_cat_id === local_category_id
-          : title.id === local_category_id
+        ? title.sub_cat_id === local_category_id
+        : title.id === local_category_id
       )"
       :values="select_titles.map((title: any) => title?.sub_cat_id ? title.title + ' - ' + title.main_title : title.title)"
+      :required="true"
     />
 
     <IlvoInputField
@@ -231,9 +253,10 @@ const handleForm = async (data: Event) => {
       :placeholder="$t('timer.input.form.colorPlaceholder')"
       :label="$t('timer.input.form.color')"
       v-model:input="timerForm.color"
+      :required="true"
     />
 
-    <p v-if="error_form">{{ error_form }}</p>
+    <p v-if="error_form" class="error">{{ error_form }}</p>
 
     <IlvoButton
       :type="buttonTypes.TEXT"
@@ -243,7 +266,6 @@ const handleForm = async (data: Event) => {
     >
       {{ $t("timer.input.form.submit") }}
     </IlvoButton>
-    <!-- Add the custom select (now just take it from localstorage) -->
   </form>
 </template>
 

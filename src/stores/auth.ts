@@ -18,6 +18,7 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const resp = await apiAxios.get("/auth/user");
       if (resp.status !== 200) return;
+      console.log(resp.data.data);
       return (user.value = resp.data.data);
     } catch (error) {
       throw new Error("Invalid credentials");

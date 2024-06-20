@@ -2,6 +2,7 @@
   "yes": "Yes",
   "no": "No",
   "development": "This feature is still in development 🛠️",
+  "notFound": "Not found",
   "navigation": {
     "seeAll": "See all"
   },
@@ -72,6 +73,7 @@
     "statistics": {
       "title": "📊 Statistics",
       "nothing": "No statistics yet",
+      "totalTasks": "Total tasks",
       "week": "These are all your tasks each day for the past 7 days"
     },
     "admin": {
@@ -170,5 +172,15 @@
     "subPlaceholder": "Type a sub category",
     "description": "If you want to create a new main category, type it in the first input field. The second form will disappear. If you want to create a subcategory, select a main category first and type in the second input field.",
     "create": "Create category"
+  },
+  "statistics": {
+    "hoursWorked": "Hours worked",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "tasksFinished": "Tasks finished",
+    "mostSpentTime": "Most spent time",
+    "download": "Download as .csv"
   }
 }

@@ -1,9 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import IlvoUserStats from "../components/organisms/IlvoUserStats.vue";
+import IlvoAdminStats from "../components/organisms/IlvoAdminStats.vue";
+import { useAuthStore } from "../stores/auth";
+
+const auth_store = useAuthStore();
+</script>
 
 <template>
-  <div class="in-progress">
-    <p>{{ $t("development") }}</p>
-  </div>
+  <IlvoUserStats v-if="auth_store.user?.role === 'user'" />
+  <IlvoAdminStats v-else-if="auth_store.user?.role === 'admin'" />
+  <p v-else>{{ $t("notFound") }}</p>
 </template>
 
 <style lang="scss"></style>

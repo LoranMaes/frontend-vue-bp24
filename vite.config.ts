@@ -30,7 +30,7 @@ export default defineConfig({
         short_name: "Vue bp time registration",
         description: "A time registration tool for dairy farmers",
         theme_color: "#ef8451",
-        start_url: "./index.html",
+        start_url: "./",
         scope: "/",
         display: "standalone",
         icons: [
@@ -67,10 +67,8 @@ export default defineConfig({
         skipWaiting: true,
         // runtimeCaching: [
         //   {
-        //     urlPattern: ({ url }) =>
-        //       url.pathname.startsWith("/api") &&
-        //       !url.pathname.startsWith("/api/auth"),
-        //     handler: "NetworkFirst",
+        //     urlPattern: ({ url }) => url.pathname.startsWith("/api"),
+        //     handler: "CacheFirst" as const,
         //     options: {
         //       cacheName: "api-cache",
         //       expiration: {

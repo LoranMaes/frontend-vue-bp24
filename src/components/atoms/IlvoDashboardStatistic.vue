@@ -11,8 +11,10 @@ import {
 } from "chart.js";
 import { useUserStore } from "../../stores/user";
 import { Line } from "vue-chartjs";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useAdminStore } from "../../stores/admin";
+import { Helpers } from "../../composables/helpers";
+import { Task } from "../../models/task.model";
 
 const props = defineProps<{
   role: "user" | "admin";
@@ -31,19 +33,9 @@ ChartJS.register(
 const user_store = useUserStore();
 const admin_store = useAdminStore();
 
-const labels = Array.from({ length: 7 }, (_, i) => {
-  const d = new Date();
-  d.setDate(d.getDate() - i);
-  return d.toLocaleDateString("en-US", { weekday: "long" });
-}).reverse();
-
-const normalizeDate = (date: Date): Date => {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-};
-
 const taskCounts = computed(() => {
   const counts: number[] = Array(7).fill(0);
-  const today = normalizeDate(new Date());
+  const today = Helpers.normalizeDate(new Date());
 
   let count_days_array: any = [];
   switch (props.role) {
@@ -56,8 +48,8 @@ const taskCounts = computed(() => {
       count_days_array = user_store.tasks;
       break;
   }
-  count_days_array.forEach((task: any) => {
-    const end = normalizeDate(new Date(task.end));
+  count_days_array.forEach((task: Task) => {
+    const end = Helpers.normalizeDate(new Date(task.end));
     const daysAgo = Math.floor(
       (today.getTime() - end.getTime()) / (1000 * 60 * 60 * 24)
     );
@@ -69,18 +61,20 @@ const taskCounts = computed(() => {
   return counts.reverse();
 });
 
-const data = {
-  labels,
-  datasets: [
-    {
-      data: taskCounts.value,
-      label: "Total tasks",
-      backgroundColor: "#5356db",
-      borderColor: "#a285d0",
-      tension: 0.3,
-    },
-  ],
-};
+const data = computed(() => {
+  return {
+    labels: Helpers.statsLabelsPastWeek(),
+    datasets: [
+      {
+        data: taskCounts.value,
+        label: "Total tasks",
+        backgroundColor: "#5356db",
+        borderColor: "#a285d0",
+        tension: 0.3,
+      },
+    ],
+  };
+});
 
 ChartJS.defaults.font.family = "Raleway";
 ChartJS.defaults.font.size = 14;
@@ -108,7 +102,7 @@ const options = {
 </script>
 
 <template>
-  <p>{{ $t("dashboard.statistics.week") }}</p>
+  <p>{{ $t("dashboard.admin.statistics.week") }}</p>
   <Line id="weekly-overview" :data :options />
 </template>
 

@@ -26,13 +26,14 @@ defineProps<{
   values?: Array<string>;
   selected?: number;
   accept?: string;
+  required?: boolean;
 }>();
 const model = defineModel("input", { required: true });
 </script>
 
 <template>
   <div class="input-field">
-    <label :for="id">{{ label }}</label>
+    <label :for="id" :class="[required ? 'required' : '']">{{ label }}</label>
     <IlvoInput
       :type
       :id
@@ -43,9 +44,9 @@ const model = defineModel("input", { required: true });
       :mdi-icon="mdiIcon"
       :icon-side="iconSide"
       v-model:input="model"
-      :error="error"
-      :values="values"
-      :accept="accept"
+      :error
+      :values
+      :accept
       :on-update:input="($event) => $emit('update:input', $event)"
     />
     <p class="small" v-if="helper && !error">{{ helper }}</p>
@@ -69,6 +70,13 @@ const model = defineModel("input", { required: true });
   label {
     cursor: pointer;
     width: fit-content;
+    position: relative;
+    &.required::after {
+      content: "*";
+      color: var(--state-error);
+      position: absolute;
+      right: -0.5rem;
+    }
   }
 }
 </style>
