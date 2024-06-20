@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { User, UserCreation } from "../models/user.model";
 import { apiAxios } from "../axios/apiAxios";
 import { Task } from "../models/task.model";
+import { Helpers } from "../composables/helpers";
 
 export const useAdminStore = defineStore("admin", () => {
   const loading = ref(true);
@@ -45,27 +46,14 @@ export const useAdminStore = defineStore("admin", () => {
     await initializeUsers();
     if (!allUsers.value) return;
     // Convert users data to CSV format
-    const replacer = (key, value) => (value === null ? "" : value);
-    const header = Object.keys(allUsers.value[0]);
-    let csvArray = allUsers.value.map((row) =>
-      header
-        .map((fieldName) => JSON.stringify(row[fieldName], replacer))
-        .join(",")
-    );
-    csvArray.unshift(header.join(","));
-    let csvString = csvArray.join("\r\n");
+    Helpers.downloadAsCsv(allUsers.value, "users");
+  };
 
-    // Create a Blob from the CSV data
-    const blob = new Blob([csvString], { type: "text/csv" });
-
-    // Create a link element and trigger a click event on it
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "users.csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadTasksAsCSV = async () => {
+    await initializeTasks();
+    if (!tasks.value) return;
+    // Convert tasks data to CSV format
+    Helpers.downloadAsCsv(tasks.value, "tasks");
   };
 
   const deleteUser = async (id: string) => {
@@ -156,6 +144,7 @@ export const useAdminStore = defineStore("admin", () => {
     tasks,
     allUsers,
     downloadUsersAsCSV,
+    downloadTasksAsCSV,
     deleteUser,
     createUser,
     createCategory,

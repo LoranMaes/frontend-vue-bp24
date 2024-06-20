@@ -38,7 +38,6 @@ onMounted(async () => {
 <template>
   <IlvoHeader v-if="auth_store.isAuthenticated" />
 
-  <!-- Make routing possible -->
   <main>
     <div id="loading" v-if="auth_store.loading">
       <span class="loader"></span>

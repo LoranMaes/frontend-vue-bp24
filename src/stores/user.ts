@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { Task } from "../models/task.model";
 import { apiAxios } from "../axios/apiAxios";
 import { Category } from "../models/category.model";
+import { Helpers } from "../composables/helpers";
 
 export const useUserStore = defineStore("user", () => {
   const loading = ref(true);
@@ -65,25 +66,7 @@ export const useUserStore = defineStore("user", () => {
     await initializeCategories();
     await initializeTasks();
     if (!tasks.value || !categories.value) return;
-    const replacer = (key, value) => (value === null ? "" : value);
-    const header = Object.keys(tasks.value[0]);
-    let csvArray = tasks.value.map((row) =>
-      header
-        .map((fieldName) => JSON.stringify(row[fieldName], replacer))
-        .join(",")
-    );
-    csvArray.unshift(header.join(","));
-    let csvString = csvArray.join("\r\n");
-    // Create a Blob from the CSV data
-    const blob = new Blob([csvString], { type: "text/csv" });
-    // Create a link element and trigger a click event on it
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "tasks.csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    Helpers.downloadAsCsv(tasks.value, "tasks");
   };
 
   return {

@@ -13,7 +13,7 @@ import {
   ArcElement,
 } from "chart.js";
 import { Line, Bar, PolarArea } from "vue-chartjs";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { Helpers } from "../../composables/helpers";
 import { useUserStore } from "../../stores/user";
 import { Task } from "../../models/task.model";
@@ -169,16 +169,19 @@ const mostSpentTimeWeekly = computed(() => {
     };
   });
   return {
-    labels: polarLabels.value,
-    datasets: categoryTimes.map((categoryTime) => {
-      return {
-        label: categoryTime.category,
-        backgroundColor: "#5356db",
-        data: [categoryTime.time],
-      };
-    }),
+    labels: categoryTimes.map((ct) => ct.category),
+    datasets: [
+      {
+        label: "Hours Spent",
+        data: categoryTimes.map((ct) => ct.time),
+        backgroundColor: categoryTimes.map((ct, index) =>
+          index % 2 === 0 ? "#5356db" : "#a285d0"
+        ),
+      },
+    ],
   };
 });
+
 const mostSpentTimeMonthly = computed(() => {
   const tasks = user_store.tasks;
   if (!tasks)
@@ -218,14 +221,16 @@ const mostSpentTimeMonthly = computed(() => {
     };
   });
   return {
-    labels: polarLabels.value,
-    datasets: categoryTimes.map((categoryTime, index) => {
-      return {
-        label: categoryTime.category,
-        backgroundColor: tasks[index].color,
-        data: [categoryTime.time],
-      };
-    }),
+    labels: categoryTimes.map((ct) => ct.category),
+    datasets: [
+      {
+        label: "Hours Spent",
+        data: categoryTimes.map((ct) => ct.time),
+        backgroundColor: categoryTimes.map((ct, index) =>
+          index % 2 === 0 ? "#5356db" : "#a285d0"
+        ),
+      },
+    ],
   };
 });
 </script>
@@ -257,14 +262,15 @@ const mostSpentTimeMonthly = computed(() => {
         <h2>
           {{ $t("statistics.mostSpentTime") }} - {{ $t("statistics.weekly") }}
         </h2>
-        <p class="subtitle bold">{{}}</p>
       </div>
       <PolarArea
         id="mostSpentTimeWeekly"
         :data="mostSpentTimeWeekly"
         :options
         v-if="
-          mostSpentTimeWeekly.datasets.some((dataset) => dataset.data[0] > 0)
+          mostSpentTimeWeekly.datasets.some((dataset) =>
+            dataset.data.some((data) => data > 0)
+          )
         "
       />
       <p v-else>No tasks longer than an hour this week</p>
@@ -274,14 +280,18 @@ const mostSpentTimeMonthly = computed(() => {
         <h2>
           {{ $t("statistics.mostSpentTime") }} - {{ $t("statistics.monthly") }}
         </h2>
-        <p class="subtitle bold">{{}}</p>
+        <p class="subtitle bold">
+          {{ new Date().toLocaleDateString("en", { month: "long" }) }}
+        </p>
       </div>
       <PolarArea
         id="mostSpentTimeMonthly"
         :data="mostSpentTimeMonthly"
         :options
         v-if="
-          mostSpentTimeMonthly.datasets.some((dataset) => dataset.data[0] > 0)
+          mostSpentTimeMonthly.datasets.some((dataset) =>
+            dataset.data.some((data) => data > 0)
+          )
         "
       />
       <p v-else>No tasks longer than an hour this month</p>

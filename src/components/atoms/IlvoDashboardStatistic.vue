@@ -15,6 +15,8 @@ import { computed } from "vue";
 import { useAdminStore } from "../../stores/admin";
 import { Helpers } from "../../composables/helpers";
 import { Task } from "../../models/task.model";
+import { buttonStyleValues, buttonTypes } from "../../models/property.enum";
+import IlvoButton from "./IlvoButton.vue";
 
 const props = defineProps<{
   role: "user" | "admin";
@@ -104,6 +106,12 @@ const options = {
 <template>
   <p>{{ $t("dashboard.admin.statistics.week") }}</p>
   <Line id="weekly-overview" :data :options />
+  <IlvoButton
+    :style="buttonStyleValues.SECONDARY"
+    :type="buttonTypes.TEXT"
+    @click="async () => admin_store.downloadTasksAsCSV()"
+    >{{ $t("statistics.download") }}</IlvoButton
+  >
 </template>
 
 <style lang="scss" scoped></style>
